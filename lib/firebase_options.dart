@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'ensmark-applications.firebasestorage.app',
     iosBundleId: 'com.ensmark.mobile',
   );
+
 }

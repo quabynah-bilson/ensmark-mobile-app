@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/constants.dart';
+import 'package:mobile/core/extensions.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -60,7 +61,7 @@ class _WelcomePageState extends State<WelcomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
+            Text('$_counter', style: context.textTheme.headlineMedium),
           ],
         ),
       ),

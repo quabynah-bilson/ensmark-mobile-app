@@ -15,6 +15,7 @@ class _EnsmarkAppState extends State<EnsmarkApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerConfig: appRouter,
       scrollBehavior: CupertinoScrollBehavior(),
       theme: AppTheme.lightTheme(),
