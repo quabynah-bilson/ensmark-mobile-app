@@ -49,8 +49,8 @@ app.*.map.json
 **/lcov.info
 **/.idea/
 **/*.env
-**/google-services.json
-**/GoogleService-Info.plist
+#**/google-services.json
+#**/GoogleService-Info.plist
 
 # FVM Version Cache
 .fvm/

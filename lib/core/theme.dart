@@ -69,6 +69,7 @@ final class AppTheme {
         // Use a generic sans-serif font for simplicity in this example.
         // Replace with your chosen font family.
         displayLarge: _primaryFont(fontSize: 57, fontWeight: FontWeight.w400, color: _AppColors.lightTextPrimary),
+        headlineMedium: _primaryFont(fontWeight: FontWeight.w600, color: _AppColors.lightTextPrimary),
         headlineLarge: _primaryFont(fontSize: 32, fontWeight: FontWeight.bold, color: _AppColors.lightTextPrimary),
         titleLarge: _primaryFont(fontSize: 22, fontWeight: FontWeight.bold, color: _AppColors.lightTextPrimary),
         bodyLarge: _secondaryFont(fontSize: 16, fontWeight: FontWeight.normal, color: _AppColors.lightTextPrimary),
@@ -121,6 +122,7 @@ final class AppTheme {
       // --- Typography ---
       textTheme: TextTheme(
         displayLarge: _primaryFont(fontSize: 57, fontWeight: FontWeight.w400, color: _AppColors.darkTextPrimary),
+        headlineMedium: _primaryFont(fontWeight: FontWeight.w600, color: _AppColors.darkTextPrimary),
         headlineLarge: _primaryFont(fontSize: 32, fontWeight: FontWeight.bold, color: _AppColors.darkTextPrimary),
         titleLarge: _primaryFont(fontSize: 22, fontWeight: FontWeight.bold, color: _AppColors.darkTextPrimary),
         bodyLarge: _secondaryFont(fontSize: 16, fontWeight: FontWeight.normal, color: _AppColors.darkTextPrimary),

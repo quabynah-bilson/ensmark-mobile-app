@@ -12,6 +12,8 @@ final appRouter = GoRouter(
   initialLocation: AppRoutes.initial,
   // extraCodec: _AppExtraCodec(),
   redirect: (_, state) async {
+    // https://ensmark-applications.web.app/download
+    if (state.matchedLocation == '/download') return AppRoutes.initial;
     //!todo - handle redirects here
     return null;
   },
@@ -21,7 +23,7 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.verifyVendor,
       builder: (_, state) {
-        final args = VendorVerificationPageArgs(params: state.uri.queryParameters);
+        final args = VendorVerificationPageArgs(params: state.pathParameters);
         return VendorVerificationPage(args: args);
       },
     ),
