@@ -41,25 +41,27 @@ class _RegisterVendorPageState extends State<RegisterVendorPage> {
                       title: 'Personal Information',
                       subtitle: 'Your first point of contact — provide your name, email, and phone number.',
                       isActive: true,
-                      isCompleted: true,
                     ),
                   ),
                   OnboardingStepperTile(
                     data: OnboardingStepperData(
                       title: 'Business Details',
-                      subtitle: 'Provide your business registration and commencement details',
+                      subtitle: 'Tell us about your business registration and commencement',
+                      isActive: false,
                     ),
                   ),
                   OnboardingStepperTile(
                     data: OnboardingStepperData(
                       title: 'Location & Identity',
-                      subtitle: 'Tell us where you operate and verify your identity',
+                      subtitle: 'Provide your location and verify your identity information',
+                      isActive: false,
                     ),
                   ),
                   OnboardingStepperTile(
                     data: OnboardingStepperData(
                       title: 'Revenue Items',
-                      subtitle: 'Select the permits this account is being created for.',
+                      subtitle: 'Select the permits you’re applying for with this account',
+                      isActive: false,
                     ),
                   ),
                 ],
