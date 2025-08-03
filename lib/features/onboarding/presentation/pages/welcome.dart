@@ -30,49 +30,7 @@ class _WelcomePageState extends State<WelcomePage> {
           icon: Icon(TablerIcons.player_play),
           tooltip: 'Get started',
           label: Text('Get started'),
-          onPressed: () async {
-            await showCupertinoModalBottomSheet(
-              context: context,
-              backgroundColor: context.colorScheme.surface,
-              useRootNavigator: true,
-              builder: (context) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 24,
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      spacing: 4,
-                      children: [
-                        Text('Welcome to ${AppConstants.appName}', style: context.textTheme.titleLarge),
-                        Text('Select a user type to get started', style: context.textTheme.bodyMedium),
-                      ],
-                    ),
-                    Lottie.asset(Assets.animHouseRent, height: context.height * 0.25),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      spacing: 8,
-                      children: [
-                        AppButton(
-                          text: 'Continue as Property Owner',
-                          onPressed: () => context
-                            ..pop()
-                            ..push(AppRoutes.registerVendor),
-                        ),
-                        AppButton.outlined(
-                          text: 'Continue as Revenue Officer',
-                          onPressed: () => context
-                            ..pop()
-                            ..push(AppRoutes.loginRevenueOfficer),
-                        ),
-                      ],
-                    ),
-                  ],
-                ).padding(top: 24, bottom: context.padding.bottom + 24, horizontal: 24);
-              },
-            );
-          },
+          onPressed: _showGetStartedSheet,
         ),
         body: Stack(
           children: [
@@ -113,6 +71,50 @@ class _WelcomePageState extends State<WelcomePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _showGetStartedSheet() async {
+    await showCupertinoModalBottomSheet(
+      context: context,
+      backgroundColor: context.colorScheme.surface,
+      useRootNavigator: true,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          spacing: 24,
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 4,
+              children: [
+                Text('Welcome to ${AppConstants.appName}', style: context.textTheme.titleLarge),
+                Text('Select a user type to get started', style: context.textTheme.bodyMedium),
+              ],
+            ),
+            Lottie.asset(Assets.animHouseRent, height: context.height * 0.25),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 8,
+              children: [
+                AppButton(
+                  text: 'Continue as Property Owner',
+                  onPressed: () => context
+                    ..pop()
+                    ..push(AppRoutes.registerVendor),
+                ),
+                AppButton.outlined(
+                  text: 'Continue as Revenue Officer',
+                  onPressed: () => context
+                    ..pop()
+                    ..push(AppRoutes.loginRevenueOfficer),
+                ),
+              ],
+            ),
+          ],
+        ).padding(top: 24, bottom: context.padding.bottom + 24, horizontal: 24);
+      },
     );
   }
 }
