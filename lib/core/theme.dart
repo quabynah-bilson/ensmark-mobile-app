@@ -50,31 +50,41 @@ final class AppTheme {
 
   // --- Light Theme ---
   static ThemeData lightTheme() {
+    const colorScheme = ColorScheme.light(
+      primary: _AppColors.lightPrimary,
+      secondary: _AppColors.lightAccent,
+      surface: _AppColors.lightSurface,
+      surfaceContainer: _AppColors.lightBackground,
+      error: _AppColors.lightError,
+    );
     return ThemeData.light(useMaterial3: true).copyWith(
       // --- Color Scheme ---
       brightness: Brightness.light,
       primaryColor: _AppColors.lightPrimary,
       scaffoldBackgroundColor: _AppColors.lightBackground,
       cardColor: _AppColors.lightSurface,
-      colorScheme: const ColorScheme.light(
-        primary: _AppColors.lightPrimary,
-        secondary: _AppColors.lightAccent,
-        surface: _AppColors.lightSurface,
-        surfaceContainer: _AppColors.lightBackground,
-        error: _AppColors.lightError,
-      ),
+      colorScheme: colorScheme,
 
       // --- Typography ---
       textTheme: TextTheme(
         // Use a generic sans-serif font for simplicity in this example.
         // Replace with your chosen font family.
         displayLarge: _primaryFont(fontSize: 57, fontWeight: FontWeight.w400, color: _AppColors.lightTextPrimary),
-        headlineMedium: _primaryFont(fontWeight: FontWeight.w600, color: _AppColors.lightTextPrimary),
         headlineLarge: _primaryFont(fontSize: 32, fontWeight: FontWeight.bold, color: _AppColors.lightTextPrimary),
+        headlineMedium: _primaryFont(fontWeight: FontWeight.w600, color: _AppColors.lightTextPrimary),
+        headlineSmall: _primaryFont(fontSize: 24, fontWeight: FontWeight.w400, color: _AppColors.lightTextPrimary),
         titleLarge: _primaryFont(fontSize: 22, fontWeight: FontWeight.bold, color: _AppColors.lightTextPrimary),
         bodyLarge: _secondaryFont(fontSize: 16, fontWeight: FontWeight.normal, color: _AppColors.lightTextPrimary),
         bodyMedium: _secondaryFont(fontSize: 14, fontWeight: FontWeight.normal, color: _AppColors.lightTextSecondary),
+        labelLarge: _secondaryFont(fontSize: 16, fontWeight: FontWeight.w500, color: _AppColors.lightTextSecondary),
+        labelMedium: _secondaryFont(fontSize: 14, fontWeight: FontWeight.w500, color: _AppColors.lightTextSecondary),
         labelSmall: _secondaryFont(fontSize: 11, fontWeight: FontWeight.w500, color: _AppColors.lightTextSecondary),
+      ),
+
+      appBarTheme: AppBarTheme(
+        centerTitle: true,
+        titleTextStyle: _primaryFont(fontSize: 18, fontWeight: FontWeight.w500, color: _AppColors.lightTextPrimary),
+        backgroundColor: colorScheme.inversePrimary,
       ),
 
       // --- Component Shapes & Styles ---
@@ -84,7 +94,7 @@ final class AppTheme {
           backgroundColor: _AppColors.lightPrimary,
           shape: const RoundedRectangleBorder(borderRadius: _borderRadius),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          textStyle: _secondaryFont(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -93,7 +103,16 @@ final class AppTheme {
           shape: const RoundedRectangleBorder(borderRadius: _borderRadius),
         ),
       ),
-      cardTheme: const CardThemeData(shape: RoundedRectangleBorder(borderRadius: _borderRadius), elevation: 2),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          foregroundColor: _AppColors.lightPrimary,
+          side: BorderSide(color: _AppColors.lightPrimary),
+          shape: const RoundedRectangleBorder(borderRadius: _borderRadius),
+          textStyle: _secondaryFont(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ),
+      cardTheme: const CardThemeData(shape: RoundedRectangleBorder(borderRadius: _borderRadius), elevation: 0.5),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(borderRadius: _borderRadius),
         contentPadding: const EdgeInsets.all(16.0),
@@ -105,28 +124,38 @@ final class AppTheme {
 
   // --- Dark Theme ---
   static ThemeData darkTheme() {
+    const colorScheme = ColorScheme.dark(
+      primary: _AppColors.darkPrimary,
+      secondary: _AppColors.darkAccent,
+      surface: _AppColors.darkSurface,
+      surfaceContainer: _AppColors.darkBackground,
+      error: _AppColors.darkError,
+    );
     return ThemeData.dark(useMaterial3: true).copyWith(
       // --- Color Scheme ---
       brightness: Brightness.dark,
       primaryColor: _AppColors.darkPrimary,
       scaffoldBackgroundColor: _AppColors.darkBackground,
       cardColor: _AppColors.darkSurface,
-      colorScheme: const ColorScheme.dark(
-        primary: _AppColors.darkPrimary,
-        secondary: _AppColors.darkAccent,
-        surface: _AppColors.darkSurface,
-        surfaceContainer: _AppColors.darkBackground,
-        error: _AppColors.darkError,
+      colorScheme: colorScheme,
+
+      appBarTheme: AppBarTheme(
+        centerTitle: true,
+        titleTextStyle: _primaryFont(fontSize: 18, fontWeight: FontWeight.w500, color: _AppColors.darkTextPrimary),
+        backgroundColor: colorScheme.inversePrimary,
       ),
 
       // --- Typography ---
       textTheme: TextTheme(
         displayLarge: _primaryFont(fontSize: 57, fontWeight: FontWeight.w400, color: _AppColors.darkTextPrimary),
-        headlineMedium: _primaryFont(fontWeight: FontWeight.w600, color: _AppColors.darkTextPrimary),
         headlineLarge: _primaryFont(fontSize: 32, fontWeight: FontWeight.bold, color: _AppColors.darkTextPrimary),
+        headlineMedium: _primaryFont(fontWeight: FontWeight.w600, color: _AppColors.darkTextPrimary),
+        headlineSmall: _primaryFont(fontSize: 24, fontWeight: FontWeight.w400, color: _AppColors.darkTextPrimary),
         titleLarge: _primaryFont(fontSize: 22, fontWeight: FontWeight.bold, color: _AppColors.darkTextPrimary),
         bodyLarge: _secondaryFont(fontSize: 16, fontWeight: FontWeight.normal, color: _AppColors.darkTextPrimary),
         bodyMedium: _secondaryFont(fontSize: 14, fontWeight: FontWeight.normal, color: _AppColors.darkTextSecondary),
+        labelLarge: _secondaryFont(fontSize: 16, fontWeight: FontWeight.w500, color: _AppColors.darkTextSecondary),
+        labelMedium: _secondaryFont(fontSize: 14, fontWeight: FontWeight.w500, color: _AppColors.darkTextSecondary),
         labelSmall: _secondaryFont(fontSize: 11, fontWeight: FontWeight.w500, color: _AppColors.darkTextSecondary),
       ),
 
@@ -137,7 +166,7 @@ final class AppTheme {
           backgroundColor: _AppColors.darkPrimary,
           shape: const RoundedRectangleBorder(borderRadius: _borderRadius),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          textStyle: _secondaryFont(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -146,7 +175,16 @@ final class AppTheme {
           shape: const RoundedRectangleBorder(borderRadius: _borderRadius),
         ),
       ),
-      cardTheme: const CardThemeData(shape: RoundedRectangleBorder(borderRadius: _borderRadius), elevation: 2),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          foregroundColor: _AppColors.darkPrimary,
+          side: BorderSide(color: _AppColors.darkPrimary),
+          shape: const RoundedRectangleBorder(borderRadius: _borderRadius),
+          textStyle: _secondaryFont(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ),
+      cardTheme: const CardThemeData(shape: RoundedRectangleBorder(borderRadius: _borderRadius), elevation: 0.5),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(borderRadius: _borderRadius),
         contentPadding: const EdgeInsets.all(16.0),
