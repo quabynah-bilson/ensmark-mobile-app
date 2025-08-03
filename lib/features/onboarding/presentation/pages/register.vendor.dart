@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/core/extensions.dart';
 
 class RegisterVendorPage extends StatefulWidget {
   const RegisterVendorPage({super.key});
@@ -11,6 +10,6 @@ class RegisterVendorPage extends StatefulWidget {
 class _RegisterVendorPageState extends State<RegisterVendorPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Container(color: context.colorScheme.secondaryContainer));
+    return Scaffold();
   }
 }

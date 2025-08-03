@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mobile/core/constants.dart';
 import 'package:mobile/core/extensions.dart';
+import 'package:mobile/core/routing/router.dart';
+import 'package:mobile/features/shared/presentation/widgets/button.dart';
+import 'package:mobile/generated/assets.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -10,66 +19,100 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(AppConstants.appName),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: context.textTheme.headlineMedium),
+    return AnimationLimiter(
+      child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: context.colorScheme.surface,
+          foregroundColor: context.colorScheme.onSurface,
+          icon: Icon(TablerIcons.player_play),
+          tooltip: 'Get started',
+          label: Text('Get started'),
+          onPressed: () async {
+            await showCupertinoModalBottomSheet(
+              context: context,
+              backgroundColor: context.colorScheme.surface,
+              useRootNavigator: true,
+              builder: (context) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 24,
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      spacing: 4,
+                      children: [
+                        Text('Welcome to ${AppConstants.appName}', style: context.textTheme.titleLarge),
+                        Text('Select a user type to get started', style: context.textTheme.bodyMedium),
+                      ],
+                    ),
+                    Lottie.asset(Assets.animHouseRent, height: context.height * 0.25),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      spacing: 8,
+                      children: [
+                        AppButton(
+                          text: 'Continue as Property Owner',
+                          onPressed: () => context
+                            ..pop()
+                            ..push(AppRoutes.registerVendor),
+                        ),
+                        AppButton.outlined(
+                          text: 'Continue as Revenue Officer',
+                          onPressed: () => context
+                            ..pop()
+                            ..push(AppRoutes.loginRevenueOfficer),
+                        ),
+                      ],
+                    ),
+                  ],
+                ).padding(top: 24, bottom: context.padding.bottom + 24, horizontal: 24);
+              },
+            );
+          },
+        ),
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(Assets.imgWelcomeImage, fit: BoxFit.cover, alignment: Alignment.bottomCenter),
+            ),
+            Positioned.fill(child: Container(color: context.colorScheme.onSurface.withValues(alpha: 0.15))),
+            Positioned(
+              top: context.height * 0.15,
+              left: 16,
+              right: 16,
+              height: context.height * 0.3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                spacing: 16,
+                children: AnimationConfiguration.toStaggeredList(
+                  duration: const Duration(milliseconds: 500),
+                  childAnimationBuilder: (widget) => SlideAnimation(
+                    verticalOffset: context.height * 0.1,
+                    child: FadeInAnimation(child: widget),
+                  ),
+                  children: [
+                    Text(
+                      'Your Property Management Simplified',
+                      textAlign: TextAlign.center,
+                      style: context.textTheme.headlineLarge?.copyWith(color: context.colorScheme.surface),
+                    ),
+                    Text(
+                      'Manage your properties, payments, and notifications all in one place',
+                      textAlign: TextAlign.center,
+                      style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.surface),
+                    ),
+                  ],
+                ),
+              ).padding(horizontal: 16),
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
