@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/core/extensions.dart';
+import 'package:shared_utils/shared_utils.dart' show ContextX;
 import 'package:mobile/core/routing/router.dart';
 
 class VendorVerificationPage extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobile/core/constants.dart';
-import 'package:mobile/core/extensions.dart';
+import 'package:shared_utils/shared_utils.dart' show ContextX;
 import 'package:mobile/core/routing/router.dart';
 import 'package:mobile/features/shared/presentation/widgets/button.dart';
 import 'package:mobile/generated/assets.dart';
@@ -90,7 +90,11 @@ class _WelcomePageState extends State<WelcomePage> {
               spacing: 4,
               children: [
                 Text('Welcome to ${AppConstants.appName}', style: context.textTheme.titleLarge),
-                Text('Select a user type to get started', style: context.textTheme.bodyMedium),
+                Text(
+                  'Manage your properties, payments, and notifications all in one place.',
+                  style: context.textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
             Lottie.asset(Assets.animHouseRent, height: context.height * 0.25),

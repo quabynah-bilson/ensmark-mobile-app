@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/core/extensions.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:shared_utils/shared_utils.dart' show ContextX;
 
 /// A reusable and customizable button widget for the application.
 ///

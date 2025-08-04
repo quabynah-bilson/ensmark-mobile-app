@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:mobile/core/extensions.dart';
+import 'package:shared_utils/shared_utils.dart' show ContextX;
 import 'package:styled_widget/styled_widget.dart';
 
 final class OnboardingStepperData {

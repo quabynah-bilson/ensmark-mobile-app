@@ -1,8 +1,8 @@
-build:
-	@fvm flutter pub run build_runner build --delete-conflicting-outputs
+build-scripts:
+	@fvm dart run build_runner build --delete-conflicting-outputs
 
-watch:
-	@fvm flutter pub run build_runner watch --delete-conflicting-outputs
+watch-scripts:
+	@fvm dart run build_runner watch --delete-conflicting-outputs
 
 push:
 	@echo "✨ preparing to push to GitHub"

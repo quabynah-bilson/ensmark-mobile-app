@@ -1,19 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:mobile/core/mixins/validators.dart';
-import 'package:mobile/features/shared/presentation/widgets/button.dart';
-import 'package:mobile/features/shared/presentation/widgets/text.field.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:shared_utils/shared_utils.dart' show ContextX;
+part of '../register.vendor.dart';
 
-class LoginRevenueOfficerPage extends StatefulWidget {
-  const LoginRevenueOfficerPage({super.key});
+class _VendorLoginSheet extends StatefulWidget {
+  const _VendorLoginSheet();
 
   @override
-  State<LoginRevenueOfficerPage> createState() => _LoginRevenueOfficerPageState();
+  State<_VendorLoginSheet> createState() => _VendorLoginSheetState();
 }
 
-class _LoginRevenueOfficerPageState extends State<LoginRevenueOfficerPage> with ValidationMixin {
-  final _formKey = GlobalKey<FormState>(debugLabel: 'officer-login-form');
+class _VendorLoginSheetState extends State<_VendorLoginSheet> with ValidationMixin {
+  final _formKey = GlobalKey<FormState>(debugLabel: 'login-form');
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -62,6 +57,19 @@ class _LoginRevenueOfficerPageState extends State<LoginRevenueOfficerPage> with 
                     validator: validatePassword,
                     fieldType: AppTextFieldType.password,
                   ),
+                  TextButton(
+                    onPressed: () async {
+                      final hasRequestedForReset = await showCupertinoModalBottomSheet(
+                        context: context,
+                        builder: (_) => _ForgotPasswordSheet(),
+                      );
+                      debugPrint('has requested for reset: $hasRequestedForReset');
+                      if (hasRequestedForReset is bool && hasRequestedForReset) {
+                        //!todo - show snackbar message
+                      }
+                    },
+                    child: Text('Forgot password?'),
+                  ).alignment(Alignment.centerRight),
                 ],
               ),
             ),

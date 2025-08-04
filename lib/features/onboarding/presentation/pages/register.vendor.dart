@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/constants.dart';
 import 'package:mobile/core/extensions.dart';
+import 'package:mobile/core/mixins/validators.dart';
 import 'package:mobile/features/onboarding/presentation/widgets/onboarding.stepper.tile.dart';
 import 'package:mobile/features/shared/presentation/widgets/button.dart';
+import 'package:mobile/features/shared/presentation/widgets/text.field.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:shared_utils/shared_utils.dart' show ContextX;
 
+part 'vendor/forgot.password.dart';
+part 'vendor/login.dart';
 part 'vendor/step1.dart';
 part 'vendor/step2.dart';
 part 'vendor/step3.dart';
@@ -23,7 +29,7 @@ class _RegisterVendorPageState extends State<RegisterVendorPage> {
     return Scaffold(
       appBar: AppBar(title: Text('Request an account')),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 24,
         children: [
           Text(
@@ -42,12 +48,24 @@ class _RegisterVendorPageState extends State<RegisterVendorPage> {
                       subtitle: 'Your first point of contact — provide your name, email, and phone number.',
                       isActive: true,
                     ),
+                    onTap: () => showCupertinoModalBottomSheet(
+                      context: context,
+                      useRootNavigator: true,
+                      backgroundColor: context.colorScheme.surface,
+                      builder: (_) => _PersonalInfoSheet(),
+                    ),
                   ),
                   OnboardingStepperTile(
                     data: OnboardingStepperData(
                       title: 'Business Details',
                       subtitle: 'Tell us about your business registration and commencement',
-                      isActive: false,
+                      isActive: true,
+                    ),
+                    onTap: () => showCupertinoModalBottomSheet(
+                      context: context,
+                      useRootNavigator: true,
+                      backgroundColor: context.colorScheme.surface,
+                      builder: (_) => _BusinessInfoSheet(),
                     ),
                   ),
                   OnboardingStepperTile(
@@ -80,10 +98,15 @@ class _RegisterVendorPageState extends State<RegisterVendorPage> {
                 },
               ),
               AppButton(
-                text: 'Already a member? Log in',
+                text: 'Already a member? Sign in',
                 outlined: true,
-                onPressed: () {
-                  //!todo - submit request
+                onPressed: () async {
+                  await showCupertinoModalBottomSheet(
+                    context: context,
+                    backgroundColor: context.colorScheme.surface,
+                    useRootNavigator: true,
+                    builder: (_) => const _VendorLoginSheet(),
+                  );
                 },
               ),
             ],

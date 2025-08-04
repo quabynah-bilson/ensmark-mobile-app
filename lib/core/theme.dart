@@ -119,8 +119,15 @@ final class AppTheme {
       ),
       cardTheme: const CardThemeData(shape: RoundedRectangleBorder(borderRadius: _borderRadius), elevation: 0.5),
       inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(borderRadius: _borderRadius),
-        contentPadding: const EdgeInsets.all(16.0),
+        enabledBorder: UnderlineInputBorder(
+          borderRadius: _borderRadius,
+          borderSide: BorderSide(color: _AppColors.lightDisabledColor),
+        ),
+        border: UnderlineInputBorder(
+          borderRadius: _borderRadius,
+          borderSide: BorderSide(color: _AppColors.lightDisabledColor),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         filled: true,
         fillColor: _AppColors.lightBackground,
       ),
@@ -194,8 +201,15 @@ final class AppTheme {
       ),
       cardTheme: const CardThemeData(shape: RoundedRectangleBorder(borderRadius: _borderRadius), elevation: 0.5),
       inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(borderRadius: _borderRadius),
-        contentPadding: const EdgeInsets.all(16.0),
+        enabledBorder: UnderlineInputBorder(
+          borderRadius: _borderRadius,
+          borderSide: BorderSide(color: _AppColors.darkPrimary),
+        ),
+        border: UnderlineInputBorder(
+          borderRadius: _borderRadius,
+          borderSide: BorderSide(color: _AppColors.darkPrimary),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         filled: true,
         fillColor: _AppColors.darkSurface,
       ),
