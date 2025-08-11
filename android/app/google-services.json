@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "158993925306",
+    "project_id": "ensmark-applications",
+    "storage_bucket": "ensmark-applications.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158993925306:android:00613b14823fdf46476e83",
+        "android_client_info": {
+          "package_name": "com.ensmark.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2_GP--GWxDrZDXX-BlCn7h9gYRgVQha0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

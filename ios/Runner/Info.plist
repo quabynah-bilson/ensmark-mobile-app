@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Mobile</string>
+	<string>Ensmark</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,6 +28,21 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>FlutterDeepLinkingEnabled</key>
+    <true/>
+    <key>NSCameraUsageDescription</key>
+    <string>This app allows users to upload profile pictures and other photos using the camera.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app listens for speech on the device microphone at your request and uses it to fill out certain text fields in the app. This information is not stored or persisted after usage.</string>
+    <key>NSMotionUsageDescription</key>
+    <string>This app uses a package to handle app permissions. This permission is NOT required.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app allows users to upload profile pictures and other photos using the gallery.</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>remote-notification</string>
+    </array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
