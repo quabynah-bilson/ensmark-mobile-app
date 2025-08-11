@@ -1,11 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-extension BuildContextX on BuildContext {
-  ThemeData get theme => Theme.of(this);
+import 'constants.dart';
 
-  ColorScheme get colorScheme => theme.colorScheme;
-
-  EdgeInsetsGeometry get padding => MediaQuery.of(this).viewPadding;
-
-  TextTheme get textTheme => theme.textTheme;
+extension DateTimeX on DateTime {
+  String get formatted => DateFormat(AppConstants.preferredDatePattern).format(this);
 }

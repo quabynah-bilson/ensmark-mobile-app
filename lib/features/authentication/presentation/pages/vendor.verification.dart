@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/core/extensions.dart';
 import 'package:mobile/core/routing/router.dart';
+import 'package:shared_utils/shared_utils.dart' show ContextX;
 
 class VendorVerificationPage extends StatefulWidget {
   const VendorVerificationPage({super.key, required this.args});
@@ -14,6 +14,11 @@ class VendorVerificationPage extends StatefulWidget {
 class _VendorVerificationPageState extends State<VendorVerificationPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Container(color: context.colorScheme.primaryContainer));
+    return Scaffold(
+      body: Container(
+        color: context.colorScheme.primaryContainer,
+        child: Text(widget.args.toString(), style: context.textTheme.titleMedium),
+      ),
+    );
   }
 }

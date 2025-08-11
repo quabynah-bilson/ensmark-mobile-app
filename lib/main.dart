@@ -1,10 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/core/app.dart';
-import 'package:mobile/firebase_options.dart';
+import 'package:mobile/core/di/injector.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await registerDependencies();
   runApp(const EnsmarkApp());
 }
