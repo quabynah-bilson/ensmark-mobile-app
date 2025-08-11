@@ -1,6 +1,10 @@
 library;
 
-export 'onboarding/presentation/pages/welcome.dart';
-export 'onboarding/presentation/pages/register.vendor.dart';
-export 'onboarding/presentation/pages/vendor.verification.dart';
-export 'onboarding/presentation/pages/officer.login.dart';
+// authentication
+export 'authentication/presentation/pages/welcome.dart';
+export 'authentication/presentation/pages/register.vendor.dart';
+export 'authentication/presentation/pages/vendor.verification.dart';
+export 'authentication/presentation/pages/officer.login.dart';
+
+// properties
+export 'properties/presentation/pages/listing.dart';

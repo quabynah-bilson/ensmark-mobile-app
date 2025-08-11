@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // --- Typography ---
-final _primaryFont = GoogleFonts.spaceGrotesk;
+final _primaryFont = GoogleFonts.comfortaa;
 final _secondaryFont = GoogleFonts.dmSans;
 
 // This file contains the ThemeData for both the light and dark themes of the application.
@@ -22,6 +22,7 @@ final class _AppColors {
   static const Color lightSurface = Color(0xFFFFFFFF); // White for cards and surfaces.
   static const Color lightTextPrimary = Color(0xFF212529); // Dark gray for primary text.
   static const Color lightTextSecondary = Color(0xFF6C757D); // Lighter gray for secondary text.
+  static const Color lightDisabledColor = Color(0x55999999);
   static const Color lightError = Color(0xFFDC3545); // Red for error states.
   // static const Color lightSuccess = Color(0xFF28A745); // Green for success states.
 
@@ -32,6 +33,7 @@ final class _AppColors {
   static const Color darkSurface = Color(0xFF1E1E1E); // A slightly lighter gray for surfaces.
   static const Color darkTextPrimary = Color(0xFFE0E0E0); // Light gray for primary text.
   static const Color darkTextSecondary = Color(0xFFB0B0B0); // Lighter gray for secondary text.
+  static const Color darkDisabledColor = Color(0x99555555);
   static const Color darkError = Color(0xFFEF476F); // A slightly brighter red.
   // static const Color darkSuccess = Color(0xFF38B000); // A slightly brighter green.
 }
@@ -64,18 +66,21 @@ final class AppTheme {
       scaffoldBackgroundColor: _AppColors.lightBackground,
       cardColor: _AppColors.lightSurface,
       colorScheme: colorScheme,
+      disabledColor: _AppColors.lightDisabledColor,
 
       // --- Typography ---
       textTheme: TextTheme(
         // Use a generic sans-serif font for simplicity in this example.
         // Replace with your chosen font family.
         displayLarge: _primaryFont(fontSize: 57, fontWeight: FontWeight.w400, color: _AppColors.lightTextPrimary),
-        headlineLarge: _primaryFont(fontSize: 32, fontWeight: FontWeight.bold, color: _AppColors.lightTextPrimary),
+        headlineLarge: _primaryFont(fontSize: 32, fontWeight: FontWeight.w900, color: _AppColors.lightTextPrimary),
         headlineMedium: _primaryFont(fontWeight: FontWeight.w600, color: _AppColors.lightTextPrimary),
         headlineSmall: _primaryFont(fontSize: 24, fontWeight: FontWeight.w400, color: _AppColors.lightTextPrimary),
-        titleLarge: _primaryFont(fontSize: 22, fontWeight: FontWeight.bold, color: _AppColors.lightTextPrimary),
+        titleLarge: _primaryFont(fontSize: 20, fontWeight: FontWeight.bold, color: _AppColors.lightTextPrimary),
+        titleMedium: _primaryFont(fontWeight: FontWeight.bold, color: _AppColors.lightTextPrimary),
         bodyLarge: _secondaryFont(fontSize: 16, fontWeight: FontWeight.normal, color: _AppColors.lightTextPrimary),
-        bodyMedium: _secondaryFont(fontSize: 14, fontWeight: FontWeight.normal, color: _AppColors.lightTextSecondary),
+        bodyMedium: _secondaryFont(fontSize: 14, fontWeight: FontWeight.normal, color: _AppColors.lightTextPrimary),
+        bodySmall: _secondaryFont(fontWeight: FontWeight.normal, color: _AppColors.lightTextSecondary),
         labelLarge: _secondaryFont(fontSize: 16, fontWeight: FontWeight.w500, color: _AppColors.lightTextSecondary),
         labelMedium: _secondaryFont(fontSize: 14, fontWeight: FontWeight.w500, color: _AppColors.lightTextSecondary),
         labelSmall: _secondaryFont(fontSize: 11, fontWeight: FontWeight.w500, color: _AppColors.lightTextSecondary),
@@ -83,7 +88,7 @@ final class AppTheme {
 
       appBarTheme: AppBarTheme(
         centerTitle: true,
-        titleTextStyle: _primaryFont(fontSize: 18, fontWeight: FontWeight.w500, color: _AppColors.lightTextPrimary),
+        titleTextStyle: _primaryFont(fontSize: 18, fontWeight: FontWeight.bold, color: _AppColors.lightTextPrimary),
         backgroundColor: colorScheme.inversePrimary,
       ),
 
@@ -94,7 +99,7 @@ final class AppTheme {
           backgroundColor: _AppColors.lightPrimary,
           shape: const RoundedRectangleBorder(borderRadius: _borderRadius),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: _secondaryFont(fontSize: 16, fontWeight: FontWeight.bold),
+          textStyle: _secondaryFont(fontSize: 14, fontWeight: FontWeight.bold),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -109,13 +114,20 @@ final class AppTheme {
           foregroundColor: _AppColors.lightPrimary,
           side: BorderSide(color: _AppColors.lightPrimary),
           shape: const RoundedRectangleBorder(borderRadius: _borderRadius),
-          textStyle: _secondaryFont(fontSize: 16, fontWeight: FontWeight.bold),
+          textStyle: _secondaryFont(fontSize: 14, fontWeight: FontWeight.bold),
         ),
       ),
       cardTheme: const CardThemeData(shape: RoundedRectangleBorder(borderRadius: _borderRadius), elevation: 0.5),
       inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(borderRadius: _borderRadius),
-        contentPadding: const EdgeInsets.all(16.0),
+        enabledBorder: UnderlineInputBorder(
+          borderRadius: _borderRadius,
+          borderSide: BorderSide(color: _AppColors.lightDisabledColor),
+        ),
+        border: UnderlineInputBorder(
+          borderRadius: _borderRadius,
+          borderSide: BorderSide(color: _AppColors.lightDisabledColor),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         filled: true,
         fillColor: _AppColors.lightBackground,
       ),
@@ -138,22 +150,25 @@ final class AppTheme {
       scaffoldBackgroundColor: _AppColors.darkBackground,
       cardColor: _AppColors.darkSurface,
       colorScheme: colorScheme,
+      disabledColor: _AppColors.darkDisabledColor,
 
       appBarTheme: AppBarTheme(
         centerTitle: true,
-        titleTextStyle: _primaryFont(fontSize: 18, fontWeight: FontWeight.w500, color: _AppColors.darkTextPrimary),
+        titleTextStyle: _primaryFont(fontSize: 18, fontWeight: FontWeight.bold, color: _AppColors.darkTextPrimary),
         backgroundColor: colorScheme.inversePrimary,
       ),
 
       // --- Typography ---
       textTheme: TextTheme(
         displayLarge: _primaryFont(fontSize: 57, fontWeight: FontWeight.w400, color: _AppColors.darkTextPrimary),
-        headlineLarge: _primaryFont(fontSize: 32, fontWeight: FontWeight.bold, color: _AppColors.darkTextPrimary),
+        headlineLarge: _primaryFont(fontSize: 32, fontWeight: FontWeight.w900, color: _AppColors.darkTextPrimary),
         headlineMedium: _primaryFont(fontWeight: FontWeight.w600, color: _AppColors.darkTextPrimary),
         headlineSmall: _primaryFont(fontSize: 24, fontWeight: FontWeight.w400, color: _AppColors.darkTextPrimary),
-        titleLarge: _primaryFont(fontSize: 22, fontWeight: FontWeight.bold, color: _AppColors.darkTextPrimary),
+        titleLarge: _secondaryFont(fontSize: 20, fontWeight: FontWeight.bold, color: _AppColors.darkTextPrimary),
+        titleMedium: _secondaryFont(fontWeight: FontWeight.bold, color: _AppColors.darkTextPrimary),
         bodyLarge: _secondaryFont(fontSize: 16, fontWeight: FontWeight.normal, color: _AppColors.darkTextPrimary),
-        bodyMedium: _secondaryFont(fontSize: 14, fontWeight: FontWeight.normal, color: _AppColors.darkTextSecondary),
+        bodyMedium: _secondaryFont(fontSize: 14, fontWeight: FontWeight.normal, color: _AppColors.darkTextPrimary),
+        bodySmall: _secondaryFont(fontWeight: FontWeight.normal, color: _AppColors.darkTextSecondary),
         labelLarge: _secondaryFont(fontSize: 16, fontWeight: FontWeight.w500, color: _AppColors.darkTextSecondary),
         labelMedium: _secondaryFont(fontSize: 14, fontWeight: FontWeight.w500, color: _AppColors.darkTextSecondary),
         labelSmall: _secondaryFont(fontSize: 11, fontWeight: FontWeight.w500, color: _AppColors.darkTextSecondary),
@@ -166,7 +181,7 @@ final class AppTheme {
           backgroundColor: _AppColors.darkPrimary,
           shape: const RoundedRectangleBorder(borderRadius: _borderRadius),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: _secondaryFont(fontSize: 16, fontWeight: FontWeight.bold),
+          textStyle: _secondaryFont(fontSize: 14, fontWeight: FontWeight.bold),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -181,13 +196,20 @@ final class AppTheme {
           foregroundColor: _AppColors.darkPrimary,
           side: BorderSide(color: _AppColors.darkPrimary),
           shape: const RoundedRectangleBorder(borderRadius: _borderRadius),
-          textStyle: _secondaryFont(fontSize: 16, fontWeight: FontWeight.bold),
+          textStyle: _secondaryFont(fontSize: 14, fontWeight: FontWeight.bold),
         ),
       ),
       cardTheme: const CardThemeData(shape: RoundedRectangleBorder(borderRadius: _borderRadius), elevation: 0.5),
       inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(borderRadius: _borderRadius),
-        contentPadding: const EdgeInsets.all(16.0),
+        enabledBorder: UnderlineInputBorder(
+          borderRadius: _borderRadius,
+          borderSide: BorderSide(color: _AppColors.darkPrimary),
+        ),
+        border: UnderlineInputBorder(
+          borderRadius: _borderRadius,
+          borderSide: BorderSide(color: _AppColors.darkPrimary),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         filled: true,
         fillColor: _AppColors.darkSurface,
       ),
