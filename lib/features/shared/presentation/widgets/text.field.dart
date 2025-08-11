@@ -4,8 +4,8 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/typedefs.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:styled_widget/styled_widget.dart';
 import 'package:shared_utils/shared_utils.dart' show ContextX;
+import 'package:styled_widget/styled_widget.dart';
 
 /// An enumeration for different text field types to simplify configuration.
 enum AppTextFieldType { text, password, number, email, selector }
@@ -199,7 +199,9 @@ class _AppTextFieldState<T> extends State<AppTextField<T>> {
       case AppTextFieldType.number:
         return [FilteringTextInputFormatter.digitsOnly];
       case AppTextFieldType.email:
-        return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'))];
+        return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@._+-]'))];
+      case AppTextFieldType.password:
+        return [FilteringTextInputFormatter.singleLineFormatter];
       default:
         return <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]'))];
     }

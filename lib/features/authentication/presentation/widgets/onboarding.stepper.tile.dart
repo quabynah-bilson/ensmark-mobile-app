@@ -7,14 +7,8 @@ final class OnboardingStepperData {
   final String title;
   final String subtitle;
   final bool isCompleted;
-  final bool isActive;
 
-  const OnboardingStepperData({
-    required this.title,
-    required this.subtitle,
-    this.isCompleted = false,
-    this.isActive = false,
-  });
+  const OnboardingStepperData({required this.title, required this.subtitle, this.isCompleted = false});
 }
 
 class OnboardingStepperTile extends StatelessWidget {
@@ -25,8 +19,6 @@ class OnboardingStepperTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final background = data.isActive ? context.colorScheme.surface : context.colorScheme.surfaceContainer;
-    final border = data.isActive ? null : Border.all(color: context.theme.disabledColor);
     final completedStateForeground = data.isCompleted
         ? context.colorScheme.onTertiaryContainer
         : context.colorScheme.onSurface;
@@ -36,7 +28,7 @@ class OnboardingStepperTile extends StatelessWidget {
     return Container(
       width: context.width,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(color: background, border: border, borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(color: context.colorScheme.surface, borderRadius: BorderRadius.circular(12)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -68,6 +60,6 @@ class OnboardingStepperTile extends StatelessWidget {
           ),
         ],
       ),
-    ).gestures(onTap: data.isActive ? onTap : null);
+    ).gestures(onTap: onTap);
   }
 }
