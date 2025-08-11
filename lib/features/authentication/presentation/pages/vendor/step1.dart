@@ -9,23 +9,11 @@ class _PersonalInfoSheet extends StatefulWidget {
 
 class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationMixin {
   final _formKey = GlobalKey<FormState>(debugLabel: 'personal-info-form');
-  final _dobController = TextEditingController();
-  final _accountTypeController = TextEditingController();
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-  final _phoneNumberController = TextEditingController();
-  final _emailController = TextEditingController();
   late final _manager = context.read<VendorOnboardingManager>();
 
   @override
   void dispose() {
     _formKey.currentState?.dispose();
-    _dobController.dispose();
-    _accountTypeController.dispose();
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    _phoneNumberController.dispose();
-    _emailController.dispose();
     super.dispose();
   }
 
@@ -56,7 +44,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
               ),
               Form(
                 key: _formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: AutovalidateMode.onUnfocus,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
@@ -64,7 +52,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                   children: [
                     AppTextField(
                       labelText: 'Account Type',
-                      controller: _accountTypeController,
+                      initialValue: state.personalInfo.type.label,
                       validator: validateRequired,
                       fieldType: AppTextFieldType.selector,
                       displayText: (type) => type.label,
@@ -78,7 +66,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                       children: [
                         AppTextField(
                           labelText: 'First Name',
-                          controller: _firstNameController,
+                          initialValue: state.personalInfo.firstName,
                           onChanged: (value) {
                             _manager.update(
                               state.copyWith(personalInfo: state.personalInfo.copyWith(firstName: value)),
@@ -90,7 +78,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                         ).expanded(),
                         AppTextField(
                           labelText: 'Last Name',
-                          controller: _lastNameController,
+                          initialValue: state.personalInfo.lastName,
                           onChanged: (value) {
                             _manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(lastName: value)));
                           },
@@ -102,7 +90,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                     ),
                     AppTextField(
                       labelText: 'Email Address',
-                      controller: _emailController,
+                      initialValue: state.personalInfo.username,
                       onChanged: (value) {
                         _manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(username: value)));
                       },
@@ -111,7 +99,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                     ),
                     AppTextField(
                       labelText: 'Phone Number',
-                      controller: _phoneNumberController,
+                      initialValue: state.personalInfo.phoneNumber,
                       onChanged: (value) {
                         _manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(phoneNumber: value)));
                       },
@@ -120,7 +108,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                     ),
                     AppTextField(
                       labelText: 'Date of Birth',
-                      controller: _dobController,
+                      initialValue: state.personalInfo.dateOfBirth?.formatted,
                       readOnly: true,
                       required: false,
                       onTap: () async {
@@ -134,7 +122,6 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                           useRootNavigator: true,
                         );
                         if (selectedDate == null) return;
-                        _dobController.text = selectedDate.formatted;
                         _manager.update(
                           state.copyWith(personalInfo: state.personalInfo.copyWith(dateOfBirth: selectedDate)),
                         );
@@ -151,6 +138,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                   if (!validated) return;
                   _formKey.currentState?.save();
                   _manager.submit();
+                  context.pop();
                 },
               ),
             ],

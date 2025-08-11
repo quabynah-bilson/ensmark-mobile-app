@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile/core/routing/router.dart';
 import 'package:mobile/features/authentication/presentation/manager/auth.dart';
+import 'package:mobile/features/authentication/presentation/manager/vendor.onboarding.dart';
 import 'package:shared_utils/shared_utils.dart' show DismissKeyboard;
 
 import 'di/injector.dart';
@@ -16,12 +17,13 @@ class EnsmarkApp extends StatefulWidget {
 }
 
 class _EnsmarkAppState extends State<EnsmarkApp> {
-  late final _authManager = UserAuthManager(sl());
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => _authManager, lazy: false)],
+      providers: [
+        BlocProvider(create: (_) => UserAuthManager(sl()), lazy: false),
+        BlocProvider(create: (_) => VendorOnboardingManager(), lazy: false),
+      ],
       child: DismissKeyboard(
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

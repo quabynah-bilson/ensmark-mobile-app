@@ -9,15 +9,11 @@ class _BusinessInfoSheet extends StatefulWidget {
 
 class _BusinessInfoSheetState extends State<_BusinessInfoSheet> with ValidationMixin {
   final _formKey = GlobalKey<FormState>(debugLabel: 'business-info-form');
-  final _registrationNumberController = TextEditingController();
-  final _commencementDateController = TextEditingController();
   late final _manager = context.read<VendorOnboardingManager>();
 
   @override
   void dispose() {
     _formKey.currentState?.dispose();
-    _registrationNumberController.dispose();
-    _commencementDateController.dispose();
     super.dispose();
   }
 
@@ -44,7 +40,7 @@ class _BusinessInfoSheetState extends State<_BusinessInfoSheet> with ValidationM
               ),
               Form(
                 key: _formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: AutovalidateMode.onUnfocus,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
@@ -52,7 +48,7 @@ class _BusinessInfoSheetState extends State<_BusinessInfoSheet> with ValidationM
                   children: [
                     AppTextField(
                       labelText: 'Business Registration Number',
-                      controller: _registrationNumberController,
+                      initialValue: state.businessInfo.registrationNumber,
                       validator: validateRequired,
                       fieldType: AppTextFieldType.text,
                       onChanged: (value) {
@@ -64,7 +60,7 @@ class _BusinessInfoSheetState extends State<_BusinessInfoSheet> with ValidationM
                     ),
                     AppTextField(
                       labelText: 'Date of Commencement',
-                      controller: _commencementDateController,
+                      initialValue: state.businessInfo.registrationDate?.formatted,
                       readOnly: true,
                       onTap: () async {
                         final now = DateTime.now();
@@ -76,7 +72,6 @@ class _BusinessInfoSheetState extends State<_BusinessInfoSheet> with ValidationM
                           useRootNavigator: true,
                         );
                         if (selectedDate == null) return;
-                        _commencementDateController.text = selectedDate.formatted;
                         _manager.update(
                           state.copyWith(businessInfo: state.businessInfo.copyWith(registrationDate: selectedDate)),
                         );
@@ -92,7 +87,8 @@ class _BusinessInfoSheetState extends State<_BusinessInfoSheet> with ValidationM
                   final validated = _formKey.currentState?.validate() ?? false;
                   if (!validated) return;
                   _formKey.currentState?.save();
-                  //!todo - trigger action from bloc
+                  _manager.submit();
+                  context.pop();
                 },
               ),
             ],

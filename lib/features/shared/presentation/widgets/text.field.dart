@@ -31,6 +31,7 @@ class AppTextField<T> extends StatefulWidget {
   final List<T>? items;
   final void Function(T)? onItemSelected;
   final VoidCallback? onTap;
+  final String? initialValue;
 
   const AppTextField({
     super.key,
@@ -50,6 +51,7 @@ class AppTextField<T> extends StatefulWidget {
     this.hasFloatingLabel = true,
     this.required = true,
     this.readOnly = false,
+    this.initialValue,
     this.onTap,
   }) : assert(
          fieldType != AppTextFieldType.selector || (items != null && onItemSelected != null && displayText != null),
@@ -124,6 +126,7 @@ class _AppTextFieldState<T> extends State<AppTextField<T>> {
         textInputAction: widget.action,
         onTap: _showSelectorModal,
         onChanged: widget.onChanged,
+        initialValue: widget.initialValue,
         // Shows the modal on tap
         validator: widget.validator,
         decoration: InputDecoration(
@@ -167,6 +170,7 @@ class _AppTextFieldState<T> extends State<AppTextField<T>> {
       validator: widget.validator,
       onChanged: widget.onChanged,
       textInputAction: widget.action,
+      initialValue: widget.initialValue,
       enabled: widget.enabled,
       inputFormatters: _inputFormatters,
       decoration: InputDecoration(
