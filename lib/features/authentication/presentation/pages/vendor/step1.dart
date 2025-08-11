@@ -15,8 +15,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
   final _lastNameController = TextEditingController();
   final _phoneNumberController = TextEditingController();
   final _emailController = TextEditingController();
-  DateTime? _dob;
-  final _manager = VendorOnboardingManager();
+  late final _manager = context.read<VendorOnboardingManager>();
 
   @override
   void dispose() {
@@ -69,9 +68,8 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                       validator: validateRequired,
                       fieldType: AppTextFieldType.selector,
                       displayText: (type) => type.label,
-                      onItemSelected: (type) {
-                        //!todo - item selected
-                      },
+                      onItemSelected: (type) =>
+                          _manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(type: type))),
                       items: OwnerType.values,
                     ),
                     Row(
@@ -82,7 +80,9 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                           labelText: 'First Name',
                           controller: _firstNameController,
                           onChanged: (value) {
-                            //!todo - update state
+                            _manager.update(
+                              state.copyWith(personalInfo: state.personalInfo.copyWith(firstName: value)),
+                            );
                           },
                           required: true,
                           validator: validateRequired,
@@ -92,7 +92,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                           labelText: 'Last Name',
                           controller: _lastNameController,
                           onChanged: (value) {
-                            //!todo - update state
+                            _manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(lastName: value)));
                           },
                           validator: validateRequired,
                           required: true,
@@ -104,7 +104,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                       labelText: 'Email Address',
                       controller: _emailController,
                       onChanged: (value) {
-                        //!todo - update state
+                        _manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(username: value)));
                       },
                       validator: validateEmail,
                       fieldType: AppTextFieldType.email,
@@ -113,7 +113,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                       labelText: 'Phone Number',
                       controller: _phoneNumberController,
                       onChanged: (value) {
-                        //!todo - update state
+                        _manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(phoneNumber: value)));
                       },
                       validator: (value) => combineValidators(value, [validateRequired, validatePhoneNumber]),
                       fieldType: AppTextFieldType.number,
@@ -135,8 +135,9 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                         );
                         if (selectedDate == null) return;
                         _dobController.text = selectedDate.formatted;
-                        //!todo - update state
-                        // _manager.state.
+                        _manager.update(
+                          state.copyWith(personalInfo: state.personalInfo.copyWith(dateOfBirth: selectedDate)),
+                        );
                       },
                       validator: (value) => combineValidators(value, [validateDate]),
                     ),

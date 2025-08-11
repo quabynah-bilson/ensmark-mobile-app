@@ -5,7 +5,7 @@ import 'package:mobile/core/constants.dart';
 import 'package:mobile/core/exceptions/auth.dart';
 import 'package:mobile/core/exceptions/base.dart' show BaseException;
 import 'package:mobile/core/storage.keys.dart';
-import 'package:mobile/features/authentication/data/datasources/local.dart';
+import 'package:mobile/features/authentication/data/datasources/user.local.data_source.dart';
 import 'package:mobile/features/authentication/domain/entities/register.vendor.dart';
 import 'package:mobile/features/authentication/domain/entities/user.dart';
 import 'package:mobile/features/authentication/domain/entities/user.role.dart';
@@ -36,7 +36,7 @@ final class AuthRepositoryImpl extends AuthRepository {
     var user = await _ds.getUserByUsernameAndRole(role: role, username: username);
     if (user == null) return left(UserNotFoundException());
     await [
-      _storage.write(key: StorageKeys.kUserId, value: user.id.toString()),
+      _storage.write(key: StorageKeys.kUserId, value: user.guid),
       _storage.write(key: StorageKeys.kUserRole, value: role.label),
     ].wait;
     return right(user);

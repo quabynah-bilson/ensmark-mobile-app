@@ -5,8 +5,7 @@ part 'user.g.dart';
 
 @collection
 class AppUser {
-  Id id = Isar.autoIncrement;
-  @Index(unique: true)
+  @id
   late String guid;
   @Index(unique: true)
   late String username;
@@ -14,7 +13,7 @@ class AppUser {
   late String lastName;
   @ignore
   late String password;
-  @enumerated
+  @enumValue
   late UserRole role;
   late bool verified;
 }

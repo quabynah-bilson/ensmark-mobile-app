@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package user;
+
+enum UserAccountType {
+  USER_ACCOUNT_TYPE_UNSPECIFIED = 0;
+  USER_ACCOUNT_TYPE_PROPERTY_OWNER = 1;
+  USER_ACCOUNT_TYPE_REVENUE_OFFICER = 2;
+}
+
+enum UserPropertyOwnershipType {
+  USER_PROP_OWNERSHIP_TYPE_UNSPECIFIED = 0;
+  USER_PROP_OWNERSHIP_TYPE_INDIVIDUAL = 1;
+  USER_PROP_OWNERSHIP_TYPE_BUSINESS = 2;
+}
+
+message UserAccount {
+  string guid = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string phone_number = 4;
+  string username = 5;
+  UserAccountType account_type = 6;
+  UserPropertyOwnershipType ownership_type = 7;
+}
+
+message UserStringRequest {
+  string value = 1;
+}
+
+service UserService {
+  rpc GetUserAccount(UserStringRequest) returns (stream UserAccount);
+  rpc CreateUserAccount(UserAccount) returns (UserAccount);
+}

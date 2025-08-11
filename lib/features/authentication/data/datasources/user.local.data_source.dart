@@ -27,14 +27,14 @@ final class AuthUserLocalDataSource {
     user.role = role;
     user.firstName = firstName;
     user.lastName = lastName;
-    var id = await _db.appUsers.put(user);
-    return await _db.appUsers.get(id);
+    _db.appUsers.put(user);
+    return _db.appUsers.getAsync(user.guid);
   }
 
   Future<AppUser?> get currentUser async {
     final guid = await _storage.read(key: StorageKeys.kUserId);
     if (guid == null) return null;
-    var appUser = await _db.appUsers.filter().guidEqualTo(guid).build().findFirst();
+    var appUser = await _db.appUsers.where().guidEqualTo(guid).build().findFirstAsync();
     return appUser;
   }
 
@@ -49,7 +49,7 @@ final class AuthUserLocalDataSource {
   }
 
   Future<AppUser?> getUserByUsernameAndRole({required UserRole role, required String username}) async {
-    var appUser = await _db.appUsers.filter().usernameEqualTo(username).and().roleEqualTo(role).build().findFirst();
+    var appUser = await _db.appUsers.where().usernameEqualTo(username).and().roleEqualTo(role).build().findFirstAsync();
     return appUser;
   }
 }

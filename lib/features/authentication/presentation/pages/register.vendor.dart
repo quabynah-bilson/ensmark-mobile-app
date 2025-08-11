@@ -33,119 +33,123 @@ class RegisterVendorPage extends StatefulWidget {
 
 class _RegisterVendorPageState extends State<RegisterVendorPage> {
   final _authController = UserAuthManager(sl());
+  final _onboardingManager = VendorOnboardingManager();
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer(
-      bloc: _authController,
-      listener: (_, UserAuthState state) {
-        if (!mounted) return;
+    return BlocProvider(
+      create: (_) => _onboardingManager,
+      child: BlocConsumer(
+        bloc: _authController,
+        listener: (_, UserAuthState state) {
+          if (!mounted) return;
 
-        if (state.errorMessage != null) {
-          context.showSnackBar(
-            state.errorMessage!,
-            context.colorScheme.errorContainer,
-            context.colorScheme.onErrorContainer,
-          );
-        }
+          if (state.errorMessage != null) {
+            context.showSnackBar(
+              state.errorMessage!,
+              context.colorScheme.errorContainer,
+              context.colorScheme.onErrorContainer,
+            );
+          }
 
-        if (state.user != null) {
-          //!todo - show success
-          context.showSnackBar(
-            state.errorMessage!,
-            context.colorScheme.errorContainer,
-            context.colorScheme.onErrorContainer,
-          );
-          context.go(AppRoutes.initial);
-        }
-      },
-      builder: (_, UserAuthState state) {
-        return Scaffold(
-          appBar: AppBar(title: Text('Request an account')),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            spacing: 24,
-            children: [
-              Text(
-                "Getting started is simple — just follow the steps to request your ${AppConstants.appName} account. Once submitted successfully, a revenue officer will reach out to verify your details",
-                style: context.textTheme.bodyMedium,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 16,
-                    children: [
-                      OnboardingStepperTile(
-                        data: OnboardingStepperData(
-                          title: 'Personal Information',
-                          subtitle: 'Your first point of contact — provide your name, email, and phone number.',
+          if (state.user != null) {
+            //!todo - show success
+            context.showSnackBar(
+              state.errorMessage!,
+              context.colorScheme.errorContainer,
+              context.colorScheme.onErrorContainer,
+            );
+            context.go(AppRoutes.initial);
+          }
+        },
+        builder: (_, UserAuthState state) {
+          return Scaffold(
+            appBar: AppBar(title: Text('Request an account')),
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              spacing: 24,
+              children: [
+                Text(
+                  "Getting started is simple — just follow the steps to request your ${AppConstants.appName} account. Once submitted successfully, a revenue officer will reach out to verify your details",
+                  style: context.textTheme.bodyMedium,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: 16,
+                      children: [
+                        OnboardingStepperTile(
+                          data: OnboardingStepperData(
+                            title: 'Personal Information',
+                            subtitle: 'Your first point of contact — provide your name, email, and phone number.',
+                          ),
+                          onTap: () => showCupertinoModalBottomSheet(
+                            context: context,
+                            useRootNavigator: true,
+                            backgroundColor: context.colorScheme.surface,
+                            builder: (_) => _PersonalInfoSheet(),
+                          ),
                         ),
-                        onTap: () => showCupertinoModalBottomSheet(
-                          context: context,
-                          useRootNavigator: true,
-                          backgroundColor: context.colorScheme.surface,
-                          builder: (_) => _PersonalInfoSheet(),
+                        OnboardingStepperTile(
+                          data: OnboardingStepperData(
+                            title: 'Business Details',
+                            subtitle: 'Tell us about your business registration and commencement',
+                          ),
+                          onTap: () => showCupertinoModalBottomSheet(
+                            context: context,
+                            useRootNavigator: true,
+                            backgroundColor: context.colorScheme.surface,
+                            builder: (_) => _BusinessInfoSheet(),
+                          ),
                         ),
-                      ),
-                      OnboardingStepperTile(
-                        data: OnboardingStepperData(
-                          title: 'Business Details',
-                          subtitle: 'Tell us about your business registration and commencement',
+                        OnboardingStepperTile(
+                          data: OnboardingStepperData(
+                            title: 'Location & Identity',
+                            subtitle: 'Provide your location and verify your identity information',
+                          ),
                         ),
-                        onTap: () => showCupertinoModalBottomSheet(
-                          context: context,
-                          useRootNavigator: true,
-                          backgroundColor: context.colorScheme.surface,
-                          builder: (_) => _BusinessInfoSheet(),
+                        OnboardingStepperTile(
+                          data: OnboardingStepperData(
+                            title: 'Revenue Items',
+                            subtitle: 'Select the permits you’re applying for with this account',
+                          ),
                         ),
-                      ),
-                      OnboardingStepperTile(
-                        data: OnboardingStepperData(
-                          title: 'Location & Identity',
-                          subtitle: 'Provide your location and verify your identity information',
-                        ),
-                      ),
-                      OnboardingStepperTile(
-                        data: OnboardingStepperData(
-                          title: 'Revenue Items',
-                          subtitle: 'Select the permits you’re applying for with this account',
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                spacing: 12,
-                children: [
-                  AppButton(
-                    text: 'Submit request',
-                    isLoading: state.authenticating,
-                    onPressed: () {
-                      //!todo - submit request
-                    },
-                  ),
-                  AppButton(
-                    text: 'Already a member? Sign in',
-                    outlined: true,
-                    onPressed: () async {
-                      await showCupertinoModalBottomSheet(
-                        context: context,
-                        backgroundColor: context.colorScheme.surface,
-                        useRootNavigator: true,
-                        builder: (_) => const _VendorLoginSheet(),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ).padding(horizontal: 24, top: 24, bottom: context.padding.bottom + 16),
-        );
-      },
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 12,
+                  children: [
+                    AppButton(
+                      text: 'Submit request',
+                      isLoading: state.authenticating,
+                      onPressed: () {
+                        //!todo - submit request
+                      },
+                    ),
+                    AppButton(
+                      text: 'Already a member? Sign in',
+                      outlined: true,
+                      onPressed: () async {
+                        await showCupertinoModalBottomSheet(
+                          context: context,
+                          backgroundColor: context.colorScheme.surface,
+                          useRootNavigator: true,
+                          builder: (_) => const _VendorLoginSheet(),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ).padding(horizontal: 24, top: 24, bottom: context.padding.bottom + 16),
+          );
+        },
+      ),
     );
   }
 }

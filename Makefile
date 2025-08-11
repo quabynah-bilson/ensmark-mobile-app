@@ -22,3 +22,12 @@ push:
 feature-%:
 	@chmod +x ./create_feature.sh
 	@./create_feature.sh $*
+
+gen-protos:
+	@echo "🔄 Generating Dart files from protos..."
+	@rm -f lib/generated/*.pbjson.dart
+	@rm -f lib/generated/*.pbenum.dart
+	@rm -f lib/generated/*.pb.dart
+	@rm -f lib/generated/*.pbserver.dart
+	@protoc --dart_out=grpc:lib/generated --proto_path=protos protos/*.proto
+	@echo "✅ Proto files generated successfully"

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$VendorOnboardingState {
 
- int get currentStep; int get totalSteps;
+ int get currentStep; int get totalSteps; PersonalInfoState get personalInfo; BusinessInfoState get businessInfo;
 /// Create a copy of VendorOnboardingState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $VendorOnboardingStateCopyWith<VendorOnboardingState> get copyWith => _$VendorOn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VendorOnboardingState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.totalSteps, totalSteps) || other.totalSteps == totalSteps));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VendorOnboardingState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.totalSteps, totalSteps) || other.totalSteps == totalSteps)&&(identical(other.personalInfo, personalInfo) || other.personalInfo == personalInfo)&&(identical(other.businessInfo, businessInfo) || other.businessInfo == businessInfo));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentStep,totalSteps);
+int get hashCode => Object.hash(runtimeType,currentStep,totalSteps,personalInfo,businessInfo);
 
 @override
 String toString() {
-  return 'VendorOnboardingState(currentStep: $currentStep, totalSteps: $totalSteps)';
+  return 'VendorOnboardingState(currentStep: $currentStep, totalSteps: $totalSteps, personalInfo: $personalInfo, businessInfo: $businessInfo)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $VendorOnboardingStateCopyWith<$Res>  {
   factory $VendorOnboardingStateCopyWith(VendorOnboardingState value, $Res Function(VendorOnboardingState) _then) = _$VendorOnboardingStateCopyWithImpl;
 @useResult
 $Res call({
- int currentStep, int totalSteps
+ int currentStep, int totalSteps, PersonalInfoState personalInfo, BusinessInfoState businessInfo
 });
 
 
-
+$PersonalInfoStateCopyWith<$Res> get personalInfo;$BusinessInfoStateCopyWith<$Res> get businessInfo;
 
 }
 /// @nodoc
@@ -62,14 +62,34 @@ class _$VendorOnboardingStateCopyWithImpl<$Res>
 
 /// Create a copy of VendorOnboardingState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? currentStep = null,Object? totalSteps = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? currentStep = null,Object? totalSteps = null,Object? personalInfo = null,Object? businessInfo = null,}) {
   return _then(_self.copyWith(
 currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
 as int,totalSteps: null == totalSteps ? _self.totalSteps : totalSteps // ignore: cast_nullable_to_non_nullable
-as int,
+as int,personalInfo: null == personalInfo ? _self.personalInfo : personalInfo // ignore: cast_nullable_to_non_nullable
+as PersonalInfoState,businessInfo: null == businessInfo ? _self.businessInfo : businessInfo // ignore: cast_nullable_to_non_nullable
+as BusinessInfoState,
   ));
 }
-
+/// Create a copy of VendorOnboardingState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PersonalInfoStateCopyWith<$Res> get personalInfo {
+  
+  return $PersonalInfoStateCopyWith<$Res>(_self.personalInfo, (value) {
+    return _then(_self.copyWith(personalInfo: value));
+  });
+}/// Create a copy of VendorOnboardingState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BusinessInfoStateCopyWith<$Res> get businessInfo {
+  
+  return $BusinessInfoStateCopyWith<$Res>(_self.businessInfo, (value) {
+    return _then(_self.copyWith(businessInfo: value));
+  });
+}
 }
 
 
@@ -151,10 +171,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int currentStep,  int totalSteps)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int currentStep,  int totalSteps,  PersonalInfoState personalInfo,  BusinessInfoState businessInfo)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _VendorOnboardingState() when $default != null:
-return $default(_that.currentStep,_that.totalSteps);case _:
+return $default(_that.currentStep,_that.totalSteps,_that.personalInfo,_that.businessInfo);case _:
   return orElse();
 
 }
@@ -172,10 +192,10 @@ return $default(_that.currentStep,_that.totalSteps);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int currentStep,  int totalSteps)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int currentStep,  int totalSteps,  PersonalInfoState personalInfo,  BusinessInfoState businessInfo)  $default,) {final _that = this;
 switch (_that) {
 case _VendorOnboardingState():
-return $default(_that.currentStep,_that.totalSteps);case _:
+return $default(_that.currentStep,_that.totalSteps,_that.personalInfo,_that.businessInfo);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +212,10 @@ return $default(_that.currentStep,_that.totalSteps);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int currentStep,  int totalSteps)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int currentStep,  int totalSteps,  PersonalInfoState personalInfo,  BusinessInfoState businessInfo)?  $default,) {final _that = this;
 switch (_that) {
 case _VendorOnboardingState() when $default != null:
-return $default(_that.currentStep,_that.totalSteps);case _:
+return $default(_that.currentStep,_that.totalSteps,_that.personalInfo,_that.businessInfo);case _:
   return null;
 
 }
@@ -207,11 +227,13 @@ return $default(_that.currentStep,_that.totalSteps);case _:
 
 
 class _VendorOnboardingState implements VendorOnboardingState {
-  const _VendorOnboardingState({this.currentStep = 0, this.totalSteps = 4});
+  const _VendorOnboardingState({this.currentStep = 0, this.totalSteps = 4, this.personalInfo = const PersonalInfoState(), this.businessInfo = const BusinessInfoState()});
   
 
 @override@JsonKey() final  int currentStep;
 @override@JsonKey() final  int totalSteps;
+@override@JsonKey() final  PersonalInfoState personalInfo;
+@override@JsonKey() final  BusinessInfoState businessInfo;
 
 /// Create a copy of VendorOnboardingState
 /// with the given fields replaced by the non-null parameter values.
@@ -223,16 +245,16 @@ _$VendorOnboardingStateCopyWith<_VendorOnboardingState> get copyWith => __$Vendo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VendorOnboardingState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.totalSteps, totalSteps) || other.totalSteps == totalSteps));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VendorOnboardingState&&(identical(other.currentStep, currentStep) || other.currentStep == currentStep)&&(identical(other.totalSteps, totalSteps) || other.totalSteps == totalSteps)&&(identical(other.personalInfo, personalInfo) || other.personalInfo == personalInfo)&&(identical(other.businessInfo, businessInfo) || other.businessInfo == businessInfo));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentStep,totalSteps);
+int get hashCode => Object.hash(runtimeType,currentStep,totalSteps,personalInfo,businessInfo);
 
 @override
 String toString() {
-  return 'VendorOnboardingState(currentStep: $currentStep, totalSteps: $totalSteps)';
+  return 'VendorOnboardingState(currentStep: $currentStep, totalSteps: $totalSteps, personalInfo: $personalInfo, businessInfo: $businessInfo)';
 }
 
 
@@ -243,11 +265,11 @@ abstract mixin class _$VendorOnboardingStateCopyWith<$Res> implements $VendorOnb
   factory _$VendorOnboardingStateCopyWith(_VendorOnboardingState value, $Res Function(_VendorOnboardingState) _then) = __$VendorOnboardingStateCopyWithImpl;
 @override @useResult
 $Res call({
- int currentStep, int totalSteps
+ int currentStep, int totalSteps, PersonalInfoState personalInfo, BusinessInfoState businessInfo
 });
 
 
-
+@override $PersonalInfoStateCopyWith<$Res> get personalInfo;@override $BusinessInfoStateCopyWith<$Res> get businessInfo;
 
 }
 /// @nodoc
@@ -260,15 +282,35 @@ class __$VendorOnboardingStateCopyWithImpl<$Res>
 
 /// Create a copy of VendorOnboardingState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? currentStep = null,Object? totalSteps = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? currentStep = null,Object? totalSteps = null,Object? personalInfo = null,Object? businessInfo = null,}) {
   return _then(_VendorOnboardingState(
 currentStep: null == currentStep ? _self.currentStep : currentStep // ignore: cast_nullable_to_non_nullable
 as int,totalSteps: null == totalSteps ? _self.totalSteps : totalSteps // ignore: cast_nullable_to_non_nullable
-as int,
+as int,personalInfo: null == personalInfo ? _self.personalInfo : personalInfo // ignore: cast_nullable_to_non_nullable
+as PersonalInfoState,businessInfo: null == businessInfo ? _self.businessInfo : businessInfo // ignore: cast_nullable_to_non_nullable
+as BusinessInfoState,
   ));
 }
 
-
+/// Create a copy of VendorOnboardingState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PersonalInfoStateCopyWith<$Res> get personalInfo {
+  
+  return $PersonalInfoStateCopyWith<$Res>(_self.personalInfo, (value) {
+    return _then(_self.copyWith(personalInfo: value));
+  });
+}/// Create a copy of VendorOnboardingState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BusinessInfoStateCopyWith<$Res> get businessInfo {
+  
+  return $BusinessInfoStateCopyWith<$Res>(_self.businessInfo, (value) {
+    return _then(_self.copyWith(businessInfo: value));
+  });
+}
 }
 
 // dart format on

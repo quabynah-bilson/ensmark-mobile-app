@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package sync;
+
+enum AppSyncStatus {
+  APP_SYNC_STATUS_UNSPECIFIED = 0;
+  APP_SYNC_STATUS_PENDING = 1;
+  APP_SYNC_STATUS_PROCESSING = 2;
+  APP_SYNC_STATUS_SYNCED = 3;
+  APP_SYNC_STATUS_FAILED = 4;
+}
+
+message AppSyncQueue {
+  string guid = 1;
+  string entity = 2;
+  string payload = 3;
+  int32 attempt_count = 4;
+  string idempotency_key = 5;
+  AppSyncStatus status = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}
+
+message SyncEmpty {}
+
+service SyncService {
+  rpc SyncToServer(stream AppSyncQueue) returns (SyncEmpty);
+  rpc SyncFromServer(SyncEmpty) returns (stream AppSyncQueue);
+}
