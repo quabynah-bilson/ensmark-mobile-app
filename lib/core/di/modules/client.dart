@@ -16,7 +16,6 @@ abstract class ApiClientModule {
     options: ChannelOptions(credentials: ChannelCredentials.insecure()),
   );
 
-  @lazySingleton
   @preResolve
   Future<UserServiceClient> userClient(FlutterSecureStorage storage) async {
     final headers = {'Authorization': '${await storage.read(key: StorageKeys.kUserAuthToken)}'};
@@ -24,7 +23,6 @@ abstract class ApiClientModule {
     return UserServiceClient(channelOpts, options: callOpts);
   }
 
-  @lazySingleton
   @preResolve
   Future<PaymentServiceClient> paymentClient(FlutterSecureStorage storage) async {
     final headers = {'Authorization': '${await storage.read(key: StorageKeys.kUserAuthToken)}'};
@@ -32,7 +30,6 @@ abstract class ApiClientModule {
     return PaymentServiceClient(channelOpts, options: callOpts);
   }
 
-  @lazySingleton
   @preResolve
   Future<SyncServiceClient> syncClient(FlutterSecureStorage storage) async {
     final headers = {'Authorization': '${await storage.read(key: StorageKeys.kUserAuthToken)}'};
@@ -40,7 +37,6 @@ abstract class ApiClientModule {
     return SyncServiceClient(channelOpts, options: callOpts);
   }
 
-  @lazySingleton
   @preResolve
   Future<AuthServiceClient> authClient(FlutterSecureStorage storage) async {
     final callOpts = CallOptions(timeout: const Duration(seconds: 30));
