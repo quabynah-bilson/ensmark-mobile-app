@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile/core/di/injector.dart';
 import 'package:mobile/features/authentication/domain/entities/user.role.dart';
 import 'package:mobile/features/authentication/presentation/manager/auth.dart';
 import 'package:mobile/features/shared/presentation/manager/dashboard.dart';
@@ -18,7 +17,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   final _controller = DashboardBottomNavManager();
-  final _authController = UserAuthManager(sl());
+  late final _authController = context.read<UserAuthManager>();
 
   @override
   Widget build(BuildContext context) {

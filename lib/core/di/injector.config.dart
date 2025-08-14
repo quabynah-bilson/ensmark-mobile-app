@@ -22,6 +22,24 @@ import 'package:mobile/features/authentication/data/repositories/auth.dart'
     as _i958;
 import 'package:mobile/features/authentication/domain/repositories/auth.dart'
     as _i830;
+import 'package:mobile/features/authentication/domain/usecases/auth.status.dart'
+    as _i266;
+import 'package:mobile/features/authentication/domain/usecases/current.user.dart'
+    as _i1017;
+import 'package:mobile/features/authentication/domain/usecases/login.property.owner.dart'
+    as _i823;
+import 'package:mobile/features/authentication/domain/usecases/login.revenue.officer.dart'
+    as _i984;
+import 'package:mobile/features/authentication/domain/usecases/logout.dart'
+    as _i666;
+import 'package:mobile/features/shared/data/datasources/local/revenue.item.dart'
+    as _i3;
+import 'package:mobile/features/shared/data/repositories/revenue.item.dart'
+    as _i507;
+import 'package:mobile/features/shared/domain/repositories/revenue.item.dart'
+    as _i552;
+import 'package:mobile/features/shared/domain/usecases/get.revenue.items.dart'
+    as _i290;
 import 'package:mobile/features/sync/data/repositories/sync.dart' as _i111;
 import 'package:mobile/features/sync/data/services/sync.dart' as _i762;
 import 'package:mobile/features/sync/domain/repositories/sync.dart' as _i1032;
@@ -55,24 +73,28 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i558.FlutterSecureStorage>(),
               gh<_i338.Isar>(),
             ));
-    await gh.lazySingletonAsync<_i281.UserServiceClient>(
+    gh.singleton<_i3.RevenueItemLocalDataSource>(
+        () => _i3.RevenueItemLocalDataSource(gh<_i338.Isar>()));
+    await gh.factoryAsync<_i281.UserServiceClient>(
       () => apiClientModule.userClient(gh<_i558.FlutterSecureStorage>()),
       preResolve: true,
     );
-    await gh.lazySingletonAsync<_i941.PaymentServiceClient>(
+    await gh.factoryAsync<_i941.PaymentServiceClient>(
       () => apiClientModule.paymentClient(gh<_i558.FlutterSecureStorage>()),
       preResolve: true,
     );
-    await gh.lazySingletonAsync<_i1055.SyncServiceClient>(
+    await gh.factoryAsync<_i1055.SyncServiceClient>(
       () => apiClientModule.syncClient(gh<_i558.FlutterSecureStorage>()),
       preResolve: true,
     );
-    await gh.lazySingletonAsync<_i681.AuthServiceClient>(
+    await gh.factoryAsync<_i681.AuthServiceClient>(
       () => apiClientModule.authClient(gh<_i558.FlutterSecureStorage>()),
       preResolve: true,
     );
     gh.singleton<_i1032.SyncRepository>(
         () => _i111.SyncRepositoryImpl(gh<_i338.Isar>()));
+    gh.singleton<_i552.RevenueItemRepository>(() =>
+        _i507.RevenueItemRepositoryImpl(gh<_i3.RevenueItemLocalDataSource>()));
     gh.lazySingleton<_i762.SyncService>(() => _i762.SyncService(
           gh<_i1032.SyncRepository>(),
           gh<_i1055.SyncServiceClient>(),
@@ -81,6 +103,18 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i558.FlutterSecureStorage>(),
           gh<_i346.AuthUserLocalDataSource>(),
         ));
+    gh.singleton<_i290.GetRevenueItemsUseCase>(
+        () => _i290.GetRevenueItemsUseCase(gh<_i552.RevenueItemRepository>()));
+    gh.singleton<_i984.LoginRevenueOfficerUseCase>(
+        () => _i984.LoginRevenueOfficerUseCase(gh<_i830.AuthRepository>()));
+    gh.singleton<_i266.CheckAuthStatusUseCase>(
+        () => _i266.CheckAuthStatusUseCase(gh<_i830.AuthRepository>()));
+    gh.singleton<_i666.LogoutUseCase>(
+        () => _i666.LogoutUseCase(gh<_i830.AuthRepository>()));
+    gh.singleton<_i823.LoginPropertyOwnerUseCase>(
+        () => _i823.LoginPropertyOwnerUseCase(gh<_i830.AuthRepository>()));
+    gh.singleton<_i1017.CurrentUserUseCase>(
+        () => _i1017.CurrentUserUseCase(gh<_i830.AuthRepository>()));
     return this;
   }
 }

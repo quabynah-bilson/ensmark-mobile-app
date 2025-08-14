@@ -10,7 +10,7 @@ final sl = GetIt.I;
 
 @InjectableInit()
 Future<void> registerDependencies() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await dotenv.load();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await sl.init();
 }

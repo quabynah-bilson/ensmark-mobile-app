@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 import 'package:mobile/features/sync/domain/entities/status.dart';
 import 'package:mobile/features/sync/domain/entities/sync.dart';
-import 'package:mobile/features/sync/domain/entities/sync.entity.dart';
+import 'package:mobile/features/sync/domain/entities/sync.type.dart';
 import 'package:mobile/features/sync/domain/repositories/sync.dart';
 import 'package:uuid/uuid.dart';
 

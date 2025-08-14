@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile/core/di/injector.dart';
 import 'package:mobile/features/authentication/presentation/manager/auth.dart';
+import 'package:mobile/features/authentication/presentation/manager/vendor.onboarding.dart';
 import 'package:mobile/features/pages.dart';
 import 'package:mobile/features/shared/presentation/pages/dashboard.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -23,7 +25,7 @@ final appRouter = GoRouter(
     if (state.matchedLocation == AppLinksPatterns.download) return AppRoutes.initial;
 
     // check auth status
-    final authController = context.read<UserAuthManager>();
+    final authController = UserAuthManager(sl(), sl(), sl(), sl(), sl());
     final authenticated = await authController.authenticated;
     if (authenticated) return AppRoutes.dashboard;
     return null;
@@ -34,7 +36,12 @@ final appRouter = GoRouter(
       pageBuilder: (_, _) => const ModalBottomSheetPage(child: WelcomePage()),
     ),
     StatefulShellRoute.indexedStack(
-      pageBuilder: (_, _, shell) => ModalBottomSheetPage(child: DashboardScreen(shell: shell)),
+      pageBuilder: (_, _, shell) => ModalBottomSheetPage(
+        child: BlocProvider(
+          create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl()),
+          child: DashboardScreen(shell: shell),
+        ),
+      ),
       branches: [
         StatefulShellBranch(
           initialLocation: AppRoutes.dashboard,
@@ -47,18 +54,36 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.registerVendor,
-      pageBuilder: (_, _) => const ModalBottomSheetPage(child: RegisterVendorPage()),
+      pageBuilder: (_, _) => ModalBottomSheetPage(
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl())),
+            BlocProvider(create: (_) => VendorOnboardingManager()),
+          ],
+          child: RegisterVendorPage(),
+        ),
+      ),
     ),
     GoRoute(
       path: AppRoutes.verifyVendor,
       pageBuilder: (_, state) {
         final args = VendorVerificationPageArgs(params: state.pathParameters);
-        return ModalBottomSheetPage(child: VendorVerificationPage(args: args));
+        return ModalBottomSheetPage(
+          child: BlocProvider(
+            create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl()),
+            child: VendorVerificationPage(args: args),
+          ),
+        );
       },
     ),
     GoRoute(
       path: AppRoutes.loginRevenueOfficer,
-      pageBuilder: (_, _) => const ModalBottomSheetPage(child: LoginRevenueOfficerPage()),
+      pageBuilder: (_, _) => ModalBottomSheetPage(
+        child: BlocProvider(
+          create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl()),
+          child: LoginRevenueOfficerPage(),
+        ),
+      ),
     ),
   ],
 );

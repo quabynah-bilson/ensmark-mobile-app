@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile/core/di/injector.dart';
 import 'package:mobile/core/mixins/validators.dart';
 import 'package:mobile/core/routing/router.dart';
 import 'package:mobile/features/authentication/domain/entities/user.role.dart';
@@ -22,7 +21,7 @@ class _LoginRevenueOfficerPageState extends State<LoginRevenueOfficerPage> with 
   final _formKey = GlobalKey<FormState>(debugLabel: 'officer-login-form');
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _authController = UserAuthManager(sl());
+  late final _authController = context.read<UserAuthManager>();
 
   @override
   void dispose() {
@@ -37,7 +36,13 @@ class _LoginRevenueOfficerPageState extends State<LoginRevenueOfficerPage> with 
     return BlocConsumer(
       bloc: _authController,
       listener: (_, UserAuthState state) {
-        if (state.errorMessage != null) context.showSnackBar(state.errorMessage!);
+        if (state.errorMessage != null) {
+          context.showSnackBar(
+            state.errorMessage!,
+            context.colorScheme.errorContainer,
+            context.colorScheme.onErrorContainer,
+          );
+        }
 
         if (state.user?.role != null) context.go(AppRoutes.dashboard);
       },

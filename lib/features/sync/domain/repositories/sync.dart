@@ -1,5 +1,5 @@
 import 'package:mobile/features/sync/domain/entities/sync.dart';
-import 'package:mobile/features/sync/domain/entities/sync.entity.dart';
+import 'package:mobile/features/sync/domain/entities/sync.type.dart';
 
 abstract class SyncRepository {
   Future<SyncQueue> enqueue(SyncEntityType entity, String payload, {String? idempotencyKey});

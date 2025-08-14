@@ -2,7 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mobile/features/authentication/domain/entities/user.dart';
 import 'package:mobile/features/authentication/domain/entities/user.role.dart';
-import 'package:mobile/features/authentication/domain/repositories/auth.dart';
+import 'package:mobile/features/authentication/domain/usecases/auth.status.dart';
+import 'package:mobile/features/authentication/domain/usecases/current.user.dart';
 import 'package:mobile/features/authentication/domain/usecases/login.params.dart';
 import 'package:mobile/features/authentication/domain/usecases/login.property.owner.dart';
 import 'package:mobile/features/authentication/domain/usecases/login.revenue.officer.dart';
@@ -20,28 +21,41 @@ abstract class UserAuthState with _$UserAuthState {
 }
 
 final class UserAuthManager extends Cubit<UserAuthState> {
-  UserAuthManager(this._repo) : super(UserAuthState()) {
+  UserAuthManager(
+    this._loginPropertyOwnerUseCase,
+    this._loginRevenueOfficerUseCase,
+    this._logoutUseCase,
+    this._checkAuthStatusUseCase,
+    this._currentUserUseCase,
+  ) : super(UserAuthState()) {
     _checkAuthStatus();
   }
-  final AuthRepository _repo;
+  final LoginPropertyOwnerUseCase _loginPropertyOwnerUseCase;
+  final LoginRevenueOfficerUseCase _loginRevenueOfficerUseCase;
+  final LogoutUseCase _logoutUseCase;
+  final CheckAuthStatusUseCase _checkAuthStatusUseCase;
+  final CurrentUserUseCase _currentUserUseCase;
 
-  Future<bool> get authenticated async => _repo.authenticated;
+  AppUser? get currentUser => state.user;
+
+  Future<bool> get authenticated async {
+    final result = await _checkAuthStatusUseCase(null);
+    return result.fold((l) => false, (r) => r);
+  }
 
   Future<void> login({required UserRole role, required String username, required String password}) async {
     emit(state.copyWith(authenticating: true, errorMessage: null));
     final params = LoginParams(role: role, username: username, password: password);
     switch (role) {
       case UserRole.owner:
-        final uc = LoginPropertyOwnerUseCase(_repo);
-        final result = await uc(params);
+        final result = await _loginPropertyOwnerUseCase(params);
         result.fold(
           (l) => emit(state.copyWith(errorMessage: l)),
           (user) => emit(state.copyWith(errorMessage: null, user: user)),
         );
         break;
       case UserRole.officer:
-        final uc = LoginRevenueOfficerUseCase(_repo);
-        final result = await uc(params);
+        final result = await _loginRevenueOfficerUseCase(params);
         result.fold(
           (l) => emit(state.copyWith(errorMessage: l)),
           (user) => emit(state.copyWith(errorMessage: null, user: user)),
@@ -53,8 +67,11 @@ final class UserAuthManager extends Cubit<UserAuthState> {
 
   Future<void> logout() async {
     emit(state.copyWith(authenticating: true));
-    final uc = LogoutUseCase(_repo);
-    await uc(null);
+    final result = await _logoutUseCase(null);
+    result.fold(
+      (l) => emit(state.copyWith(errorMessage: l)),
+      (r) => emit(state.copyWith(errorMessage: null, user: null)),
+    );
     emit(state.copyWith(authenticating: false));
   }
 
@@ -62,9 +79,9 @@ final class UserAuthManager extends Cubit<UserAuthState> {
     final authed = await authenticated;
     if (!authed) return;
 
-    final either = await _repo.currentUser;
-    either.fold(
-      (l) => emit(state.copyWith(errorMessage: l.reason)),
+    final result = await _currentUserUseCase(null);
+    result.fold(
+      (l) => emit(state.copyWith(errorMessage: l)),
       (user) => emit(state.copyWith(errorMessage: null, user: user)),
     );
   }

@@ -106,28 +106,30 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                       validator: (value) => combineValidators(value, [validateRequired, validatePhoneNumber]),
                       fieldType: AppTextFieldType.number,
                     ),
-                    AppTextField(
-                      labelText: 'Date of Birth',
-                      initialValue: state.personalInfo.dateOfBirth?.formatted,
-                      readOnly: true,
-                      required: false,
-                      onTap: () async {
-                        // must be at least 18 years old
-                        final now = DateTime.now();
-                        final selectedDate = await showDatePicker(
-                          context: context,
-                          firstDate: now.subtract(const Duration(days: 365 * 100)),
-                          lastDate: now.subtract(const Duration(days: 365 * 18)),
-                          initialDate: now.subtract(const Duration(days: 365 * 18)),
-                          useRootNavigator: true,
-                        );
-                        if (selectedDate == null) return;
-                        _manager.update(
-                          state.copyWith(personalInfo: state.personalInfo.copyWith(dateOfBirth: selectedDate)),
-                        );
-                      },
-                      validator: (value) => combineValidators(value, [validateDate]),
-                    ),
+                    if (state.personalInfo.type == OwnerType.individual) ...{
+                      AppTextField(
+                        labelText: 'Date of Birth',
+                        initialValue: state.personalInfo.dateOfBirth?.formatted,
+                        readOnly: true,
+                        required: false,
+                        onTap: () async {
+                          // must be at least 18 years old
+                          final now = DateTime.now();
+                          final selectedDate = await showDatePicker(
+                            context: context,
+                            firstDate: now.subtract(const Duration(days: 365 * 100)),
+                            lastDate: now.subtract(const Duration(days: 365 * 18)),
+                            initialDate: now.subtract(const Duration(days: 365 * 18)),
+                            useRootNavigator: true,
+                          );
+                          if (selectedDate == null) return;
+                          _manager.update(
+                            state.copyWith(personalInfo: state.personalInfo.copyWith(dateOfBirth: selectedDate)),
+                          );
+                        },
+                        validator: (value) => combineValidators(value, [validateDate]),
+                      ),
+                    },
                   ],
                 ),
               ),
