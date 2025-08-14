@@ -6,6 +6,7 @@ import 'package:mobile/core/di/injector.dart';
 import 'package:mobile/features/authentication/presentation/manager/auth.dart';
 import 'package:mobile/features/authentication/presentation/manager/vendor.onboarding.dart';
 import 'package:mobile/features/pages.dart';
+import 'package:mobile/features/shared/presentation/manager/revenue.item.dart';
 import 'package:mobile/features/shared/presentation/pages/dashboard.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -20,45 +21,30 @@ final appRouterNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'app-router'
 final appRouter = GoRouter(
   initialLocation: AppRoutes.initial,
   navigatorKey: appRouterNavigatorKey,
-  redirect: (context, state) async {
-    // https://ensmark-applications.web.app/vendor/auth/verify/qioeuqoidhajhsdajhsdjasd
+  redirect: (context, state) {
+    debugPrint('redirect: ${state.matchedLocation}');
     if (state.matchedLocation == AppLinksPatterns.download) return AppRoutes.initial;
-
-    // check auth status
-    final authController = UserAuthManager(sl(), sl(), sl(), sl(), sl());
-    final authenticated = await authController.authenticated;
-    if (authenticated) return AppRoutes.dashboard;
     return null;
   },
   routes: [
     GoRoute(
       path: AppRoutes.initial,
-      pageBuilder: (_, _) => const ModalBottomSheetPage(child: WelcomePage()),
-    ),
-    StatefulShellRoute.indexedStack(
-      pageBuilder: (_, _, shell) => ModalBottomSheetPage(
+      pageBuilder: (_, _) => ModalBottomSheetPage(
         child: BlocProvider(
-          create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl()),
-          child: DashboardScreen(shell: shell),
+          create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl(), sl()),
+          lazy: false,
+          child: WelcomePage(),
         ),
       ),
-      branches: [
-        StatefulShellBranch(
-          initialLocation: AppRoutes.dashboard,
-          routes: [GoRoute(path: AppRoutes.dashboard, builder: (_, _) => PropertiesListingScreen())],
-        ),
-      ],
-      redirect: (_, _) {
-        return null;
-      },
     ),
     GoRoute(
       path: AppRoutes.registerVendor,
       pageBuilder: (_, _) => ModalBottomSheetPage(
         child: MultiBlocProvider(
           providers: [
-            BlocProvider(create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl())),
-            BlocProvider(create: (_) => VendorOnboardingManager()),
+            BlocProvider(create: (_) => RevenueItemManager(sl()), lazy: false),
+            BlocProvider(create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl(), sl())),
+            BlocProvider(create: (context) => VendorOnboardingManager()),
           ],
           child: RegisterVendorPage(),
         ),
@@ -68,9 +54,9 @@ final appRouter = GoRouter(
       path: AppRoutes.verifyVendor,
       pageBuilder: (_, state) {
         final args = VendorVerificationPageArgs(params: state.pathParameters);
-        return ModalBottomSheetPage(
+        return MaterialPage(
           child: BlocProvider(
-            create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl()),
+            create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl(), sl()),
             child: VendorVerificationPage(args: args),
           ),
         );
@@ -78,12 +64,58 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.loginRevenueOfficer,
-      pageBuilder: (_, _) => ModalBottomSheetPage(
+      pageBuilder: (_, _) => MaterialPage(
         child: BlocProvider(
-          create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl()),
+          create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl(), sl()),
           child: LoginRevenueOfficerPage(),
         ),
       ),
+    ),
+    StatefulShellRoute.indexedStack(
+      pageBuilder: (_, _, shell) => MaterialPage(
+        child: BlocProvider(
+          create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl(), sl()),
+          child: DashboardScreen(shell: shell),
+        ),
+      ),
+      branches: [
+        StatefulShellBranch(
+          initialLocation: AppRoutes.dashboard,
+          routes: [
+            GoRoute(
+              path: AppRoutes.dashboard,
+              pageBuilder: (_, _) => ModalBottomSheetPage(child: PropertiesListingScreen()),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          initialLocation: AppRoutes.payments,
+          routes: [
+            GoRoute(
+              path: AppRoutes.payments,
+              pageBuilder: (_, _) => ModalBottomSheetPage(child: PaymentsListingScreen()),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          initialLocation: AppRoutes.notifications,
+          routes: [
+            GoRoute(
+              path: AppRoutes.notifications,
+              pageBuilder: (_, _) => ModalBottomSheetPage(child: NotificationsScreen()),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          initialLocation: AppRoutes.profile,
+          routes: [
+            GoRoute(
+              path: AppRoutes.profile,
+              pageBuilder: (_, _) => ModalBottomSheetPage(child: UserProfileScreen()),
+            ),
+          ],
+        ),
+      ],
     ),
   ],
 );

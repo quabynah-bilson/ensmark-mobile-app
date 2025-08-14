@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mobile/features/authentication/domain/entities/owner.type.dart';
 
 import 'vendor/business.info.dart';
 import 'vendor/location.identity.dart';
@@ -28,16 +29,27 @@ class VendorOnboardingManager extends Cubit<VendorOnboardingState> {
 
   void update(VendorOnboardingState newState) => emit(newState);
 
-  Future<void> submit() async {
+  void submit() {
     switch (state.currentStep) {
       case 0:
-        emit(state.copyWith(completedSteps: {...state.completedSteps, VendorOnboardingStep.personalInfo}));
+        emit(
+          state.copyWith(
+            totalSteps: state.personalInfo.type == OwnerType.individual ? 3 : 4,
+            completedSteps: {...state.completedSteps, VendorOnboardingStep.personalInfo},
+          ),
+        );
         break;
       case 1:
-        emit(state.copyWith(completedSteps: {...state.completedSteps, VendorOnboardingStep.businessInfo}));
+        final step = state.personalInfo.type == OwnerType.business
+            ? VendorOnboardingStep.businessInfo
+            : VendorOnboardingStep.locationIdentity;
+        emit(state.copyWith(completedSteps: {...state.completedSteps, step}));
         break;
       case 2:
-        emit(state.copyWith(completedSteps: {...state.completedSteps, VendorOnboardingStep.locationIdentity}));
+        final step = state.personalInfo.type == OwnerType.business
+            ? VendorOnboardingStep.locationIdentity
+            : VendorOnboardingStep.revenueItems;
+        emit(state.copyWith(completedSteps: {...state.completedSteps, step}));
         break;
       case 3:
         emit(state.copyWith(completedSteps: {...state.completedSteps, VendorOnboardingStep.revenueItems}));
@@ -45,6 +57,6 @@ class VendorOnboardingManager extends Cubit<VendorOnboardingState> {
       default:
         break;
     }
-    emit(state.copyWith(currentStep: state.currentStep + 1));
+    if (state.currentStep < state.totalSteps) emit(state.copyWith(currentStep: state.currentStep + 1));
   }
 }

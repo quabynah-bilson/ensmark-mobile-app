@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'register.vendor.dart';
+part of 'request.account.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,20 @@ part of 'register.vendor.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$RegisterVendorRequest {
+mixin _$RequestAccountUseCaseParams {
 
  String get username; String get firstName; String get lastName; String get phoneNumber; OwnerType get ownerType; List<RevenueItem> get revenueItems; String? get registrationNumber; DateTime? get registrationDate; String? get taxIdentificationNumber; String? get houseNumber; String? get street; String? get digitalCode; String? get landmark; String? get town; String? get region; String? get countryCode; String? get idType; String? get idNumber; String? get addressLine1; String? get addressLine2; String? get addressLine3; String? get addressLine4; DateTime? get dateOfBirth;
-/// Create a copy of RegisterVendorRequest
+/// Create a copy of RequestAccountUseCaseParams
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$RegisterVendorRequestCopyWith<RegisterVendorRequest> get copyWith => _$RegisterVendorRequestCopyWithImpl<RegisterVendorRequest>(this as RegisterVendorRequest, _$identity);
+$RequestAccountUseCaseParamsCopyWith<RequestAccountUseCaseParams> get copyWith => _$RequestAccountUseCaseParamsCopyWithImpl<RequestAccountUseCaseParams>(this as RequestAccountUseCaseParams, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegisterVendorRequest&&(identical(other.username, username) || other.username == username)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.ownerType, ownerType) || other.ownerType == ownerType)&&const DeepCollectionEquality().equals(other.revenueItems, revenueItems)&&(identical(other.registrationNumber, registrationNumber) || other.registrationNumber == registrationNumber)&&(identical(other.registrationDate, registrationDate) || other.registrationDate == registrationDate)&&(identical(other.taxIdentificationNumber, taxIdentificationNumber) || other.taxIdentificationNumber == taxIdentificationNumber)&&(identical(other.houseNumber, houseNumber) || other.houseNumber == houseNumber)&&(identical(other.street, street) || other.street == street)&&(identical(other.digitalCode, digitalCode) || other.digitalCode == digitalCode)&&(identical(other.landmark, landmark) || other.landmark == landmark)&&(identical(other.town, town) || other.town == town)&&(identical(other.region, region) || other.region == region)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.idType, idType) || other.idType == idType)&&(identical(other.idNumber, idNumber) || other.idNumber == idNumber)&&(identical(other.addressLine1, addressLine1) || other.addressLine1 == addressLine1)&&(identical(other.addressLine2, addressLine2) || other.addressLine2 == addressLine2)&&(identical(other.addressLine3, addressLine3) || other.addressLine3 == addressLine3)&&(identical(other.addressLine4, addressLine4) || other.addressLine4 == addressLine4)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequestAccountUseCaseParams&&(identical(other.username, username) || other.username == username)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.ownerType, ownerType) || other.ownerType == ownerType)&&const DeepCollectionEquality().equals(other.revenueItems, revenueItems)&&(identical(other.registrationNumber, registrationNumber) || other.registrationNumber == registrationNumber)&&(identical(other.registrationDate, registrationDate) || other.registrationDate == registrationDate)&&(identical(other.taxIdentificationNumber, taxIdentificationNumber) || other.taxIdentificationNumber == taxIdentificationNumber)&&(identical(other.houseNumber, houseNumber) || other.houseNumber == houseNumber)&&(identical(other.street, street) || other.street == street)&&(identical(other.digitalCode, digitalCode) || other.digitalCode == digitalCode)&&(identical(other.landmark, landmark) || other.landmark == landmark)&&(identical(other.town, town) || other.town == town)&&(identical(other.region, region) || other.region == region)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.idType, idType) || other.idType == idType)&&(identical(other.idNumber, idNumber) || other.idNumber == idNumber)&&(identical(other.addressLine1, addressLine1) || other.addressLine1 == addressLine1)&&(identical(other.addressLine2, addressLine2) || other.addressLine2 == addressLine2)&&(identical(other.addressLine3, addressLine3) || other.addressLine3 == addressLine3)&&(identical(other.addressLine4, addressLine4) || other.addressLine4 == addressLine4)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth));
 }
 
 
@@ -34,15 +34,15 @@ int get hashCode => Object.hashAll([runtimeType,username,firstName,lastName,phon
 
 @override
 String toString() {
-  return 'RegisterVendorRequest(username: $username, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, ownerType: $ownerType, revenueItems: $revenueItems, registrationNumber: $registrationNumber, registrationDate: $registrationDate, taxIdentificationNumber: $taxIdentificationNumber, houseNumber: $houseNumber, street: $street, digitalCode: $digitalCode, landmark: $landmark, town: $town, region: $region, countryCode: $countryCode, idType: $idType, idNumber: $idNumber, addressLine1: $addressLine1, addressLine2: $addressLine2, addressLine3: $addressLine3, addressLine4: $addressLine4, dateOfBirth: $dateOfBirth)';
+  return 'RequestAccountUseCaseParams(username: $username, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, ownerType: $ownerType, revenueItems: $revenueItems, registrationNumber: $registrationNumber, registrationDate: $registrationDate, taxIdentificationNumber: $taxIdentificationNumber, houseNumber: $houseNumber, street: $street, digitalCode: $digitalCode, landmark: $landmark, town: $town, region: $region, countryCode: $countryCode, idType: $idType, idNumber: $idNumber, addressLine1: $addressLine1, addressLine2: $addressLine2, addressLine3: $addressLine3, addressLine4: $addressLine4, dateOfBirth: $dateOfBirth)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $RegisterVendorRequestCopyWith<$Res>  {
-  factory $RegisterVendorRequestCopyWith(RegisterVendorRequest value, $Res Function(RegisterVendorRequest) _then) = _$RegisterVendorRequestCopyWithImpl;
+abstract mixin class $RequestAccountUseCaseParamsCopyWith<$Res>  {
+  factory $RequestAccountUseCaseParamsCopyWith(RequestAccountUseCaseParams value, $Res Function(RequestAccountUseCaseParams) _then) = _$RequestAccountUseCaseParamsCopyWithImpl;
 @useResult
 $Res call({
  String username, String firstName, String lastName, String phoneNumber, OwnerType ownerType, List<RevenueItem> revenueItems, String? registrationNumber, DateTime? registrationDate, String? taxIdentificationNumber, String? houseNumber, String? street, String? digitalCode, String? landmark, String? town, String? region, String? countryCode, String? idType, String? idNumber, String? addressLine1, String? addressLine2, String? addressLine3, String? addressLine4, DateTime? dateOfBirth
@@ -53,14 +53,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$RegisterVendorRequestCopyWithImpl<$Res>
-    implements $RegisterVendorRequestCopyWith<$Res> {
-  _$RegisterVendorRequestCopyWithImpl(this._self, this._then);
+class _$RequestAccountUseCaseParamsCopyWithImpl<$Res>
+    implements $RequestAccountUseCaseParamsCopyWith<$Res> {
+  _$RequestAccountUseCaseParamsCopyWithImpl(this._self, this._then);
 
-  final RegisterVendorRequest _self;
-  final $Res Function(RegisterVendorRequest) _then;
+  final RequestAccountUseCaseParams _self;
+  final $Res Function(RequestAccountUseCaseParams) _then;
 
-/// Create a copy of RegisterVendorRequest
+/// Create a copy of RequestAccountUseCaseParams
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? username = null,Object? firstName = null,Object? lastName = null,Object? phoneNumber = null,Object? ownerType = null,Object? revenueItems = null,Object? registrationNumber = freezed,Object? registrationDate = freezed,Object? taxIdentificationNumber = freezed,Object? houseNumber = freezed,Object? street = freezed,Object? digitalCode = freezed,Object? landmark = freezed,Object? town = freezed,Object? region = freezed,Object? countryCode = freezed,Object? idType = freezed,Object? idNumber = freezed,Object? addressLine1 = freezed,Object? addressLine2 = freezed,Object? addressLine3 = freezed,Object? addressLine4 = freezed,Object? dateOfBirth = freezed,}) {
   return _then(_self.copyWith(
@@ -94,8 +94,8 @@ as DateTime?,
 }
 
 
-/// Adds pattern-matching-related methods to [RegisterVendorRequest].
-extension RegisterVendorRequestPatterns on RegisterVendorRequest {
+/// Adds pattern-matching-related methods to [RequestAccountUseCaseParams].
+extension RequestAccountUseCaseParamsPatterns on RequestAccountUseCaseParams {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -108,10 +108,10 @@ extension RegisterVendorRequestPatterns on RegisterVendorRequest {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _RegisterVendorRequest value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _RequestAccountUseCaseParams value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _RegisterVendorRequest() when $default != null:
+case _RequestAccountUseCaseParams() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -130,10 +130,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _RegisterVendorRequest value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _RequestAccountUseCaseParams value)  $default,){
 final _that = this;
 switch (_that) {
-case _RegisterVendorRequest():
+case _RequestAccountUseCaseParams():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -151,10 +151,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _RegisterVendorRequest value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _RequestAccountUseCaseParams value)?  $default,){
 final _that = this;
 switch (_that) {
-case _RegisterVendorRequest() when $default != null:
+case _RequestAccountUseCaseParams() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -174,7 +174,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String username,  String firstName,  String lastName,  String phoneNumber,  OwnerType ownerType,  List<RevenueItem> revenueItems,  String? registrationNumber,  DateTime? registrationDate,  String? taxIdentificationNumber,  String? houseNumber,  String? street,  String? digitalCode,  String? landmark,  String? town,  String? region,  String? countryCode,  String? idType,  String? idNumber,  String? addressLine1,  String? addressLine2,  String? addressLine3,  String? addressLine4,  DateTime? dateOfBirth)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _RegisterVendorRequest() when $default != null:
+case _RequestAccountUseCaseParams() when $default != null:
 return $default(_that.username,_that.firstName,_that.lastName,_that.phoneNumber,_that.ownerType,_that.revenueItems,_that.registrationNumber,_that.registrationDate,_that.taxIdentificationNumber,_that.houseNumber,_that.street,_that.digitalCode,_that.landmark,_that.town,_that.region,_that.countryCode,_that.idType,_that.idNumber,_that.addressLine1,_that.addressLine2,_that.addressLine3,_that.addressLine4,_that.dateOfBirth);case _:
   return orElse();
 
@@ -195,7 +195,7 @@ return $default(_that.username,_that.firstName,_that.lastName,_that.phoneNumber,
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String username,  String firstName,  String lastName,  String phoneNumber,  OwnerType ownerType,  List<RevenueItem> revenueItems,  String? registrationNumber,  DateTime? registrationDate,  String? taxIdentificationNumber,  String? houseNumber,  String? street,  String? digitalCode,  String? landmark,  String? town,  String? region,  String? countryCode,  String? idType,  String? idNumber,  String? addressLine1,  String? addressLine2,  String? addressLine3,  String? addressLine4,  DateTime? dateOfBirth)  $default,) {final _that = this;
 switch (_that) {
-case _RegisterVendorRequest():
+case _RequestAccountUseCaseParams():
 return $default(_that.username,_that.firstName,_that.lastName,_that.phoneNumber,_that.ownerType,_that.revenueItems,_that.registrationNumber,_that.registrationDate,_that.taxIdentificationNumber,_that.houseNumber,_that.street,_that.digitalCode,_that.landmark,_that.town,_that.region,_that.countryCode,_that.idType,_that.idNumber,_that.addressLine1,_that.addressLine2,_that.addressLine3,_that.addressLine4,_that.dateOfBirth);case _:
   throw StateError('Unexpected subclass');
 
@@ -215,7 +215,7 @@ return $default(_that.username,_that.firstName,_that.lastName,_that.phoneNumber,
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String username,  String firstName,  String lastName,  String phoneNumber,  OwnerType ownerType,  List<RevenueItem> revenueItems,  String? registrationNumber,  DateTime? registrationDate,  String? taxIdentificationNumber,  String? houseNumber,  String? street,  String? digitalCode,  String? landmark,  String? town,  String? region,  String? countryCode,  String? idType,  String? idNumber,  String? addressLine1,  String? addressLine2,  String? addressLine3,  String? addressLine4,  DateTime? dateOfBirth)?  $default,) {final _that = this;
 switch (_that) {
-case _RegisterVendorRequest() when $default != null:
+case _RequestAccountUseCaseParams() when $default != null:
 return $default(_that.username,_that.firstName,_that.lastName,_that.phoneNumber,_that.ownerType,_that.revenueItems,_that.registrationNumber,_that.registrationDate,_that.taxIdentificationNumber,_that.houseNumber,_that.street,_that.digitalCode,_that.landmark,_that.town,_that.region,_that.countryCode,_that.idType,_that.idNumber,_that.addressLine1,_that.addressLine2,_that.addressLine3,_that.addressLine4,_that.dateOfBirth);case _:
   return null;
 
@@ -227,8 +227,8 @@ return $default(_that.username,_that.firstName,_that.lastName,_that.phoneNumber,
 /// @nodoc
 
 
-class _RegisterVendorRequest implements RegisterVendorRequest {
-  const _RegisterVendorRequest({required this.username, required this.firstName, required this.lastName, required this.phoneNumber, required this.ownerType, required final  List<RevenueItem> revenueItems, this.registrationNumber, this.registrationDate, this.taxIdentificationNumber, this.houseNumber, this.street, this.digitalCode, this.landmark, this.town, this.region, this.countryCode, this.idType, this.idNumber, this.addressLine1, this.addressLine2, this.addressLine3, this.addressLine4, this.dateOfBirth}): _revenueItems = revenueItems;
+class _RequestAccountUseCaseParams implements RequestAccountUseCaseParams {
+  const _RequestAccountUseCaseParams({required this.username, required this.firstName, required this.lastName, required this.phoneNumber, required this.ownerType, required final  List<RevenueItem> revenueItems, this.registrationNumber, this.registrationDate, this.taxIdentificationNumber, this.houseNumber, this.street, this.digitalCode, this.landmark, this.town, this.region, this.countryCode, this.idType, this.idNumber, this.addressLine1, this.addressLine2, this.addressLine3, this.addressLine4, this.dateOfBirth}): _revenueItems = revenueItems;
   
 
 @override final  String username;
@@ -261,17 +261,17 @@ class _RegisterVendorRequest implements RegisterVendorRequest {
 @override final  String? addressLine4;
 @override final  DateTime? dateOfBirth;
 
-/// Create a copy of RegisterVendorRequest
+/// Create a copy of RequestAccountUseCaseParams
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$RegisterVendorRequestCopyWith<_RegisterVendorRequest> get copyWith => __$RegisterVendorRequestCopyWithImpl<_RegisterVendorRequest>(this, _$identity);
+_$RequestAccountUseCaseParamsCopyWith<_RequestAccountUseCaseParams> get copyWith => __$RequestAccountUseCaseParamsCopyWithImpl<_RequestAccountUseCaseParams>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegisterVendorRequest&&(identical(other.username, username) || other.username == username)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.ownerType, ownerType) || other.ownerType == ownerType)&&const DeepCollectionEquality().equals(other._revenueItems, _revenueItems)&&(identical(other.registrationNumber, registrationNumber) || other.registrationNumber == registrationNumber)&&(identical(other.registrationDate, registrationDate) || other.registrationDate == registrationDate)&&(identical(other.taxIdentificationNumber, taxIdentificationNumber) || other.taxIdentificationNumber == taxIdentificationNumber)&&(identical(other.houseNumber, houseNumber) || other.houseNumber == houseNumber)&&(identical(other.street, street) || other.street == street)&&(identical(other.digitalCode, digitalCode) || other.digitalCode == digitalCode)&&(identical(other.landmark, landmark) || other.landmark == landmark)&&(identical(other.town, town) || other.town == town)&&(identical(other.region, region) || other.region == region)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.idType, idType) || other.idType == idType)&&(identical(other.idNumber, idNumber) || other.idNumber == idNumber)&&(identical(other.addressLine1, addressLine1) || other.addressLine1 == addressLine1)&&(identical(other.addressLine2, addressLine2) || other.addressLine2 == addressLine2)&&(identical(other.addressLine3, addressLine3) || other.addressLine3 == addressLine3)&&(identical(other.addressLine4, addressLine4) || other.addressLine4 == addressLine4)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequestAccountUseCaseParams&&(identical(other.username, username) || other.username == username)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.ownerType, ownerType) || other.ownerType == ownerType)&&const DeepCollectionEquality().equals(other._revenueItems, _revenueItems)&&(identical(other.registrationNumber, registrationNumber) || other.registrationNumber == registrationNumber)&&(identical(other.registrationDate, registrationDate) || other.registrationDate == registrationDate)&&(identical(other.taxIdentificationNumber, taxIdentificationNumber) || other.taxIdentificationNumber == taxIdentificationNumber)&&(identical(other.houseNumber, houseNumber) || other.houseNumber == houseNumber)&&(identical(other.street, street) || other.street == street)&&(identical(other.digitalCode, digitalCode) || other.digitalCode == digitalCode)&&(identical(other.landmark, landmark) || other.landmark == landmark)&&(identical(other.town, town) || other.town == town)&&(identical(other.region, region) || other.region == region)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode)&&(identical(other.idType, idType) || other.idType == idType)&&(identical(other.idNumber, idNumber) || other.idNumber == idNumber)&&(identical(other.addressLine1, addressLine1) || other.addressLine1 == addressLine1)&&(identical(other.addressLine2, addressLine2) || other.addressLine2 == addressLine2)&&(identical(other.addressLine3, addressLine3) || other.addressLine3 == addressLine3)&&(identical(other.addressLine4, addressLine4) || other.addressLine4 == addressLine4)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth));
 }
 
 
@@ -280,15 +280,15 @@ int get hashCode => Object.hashAll([runtimeType,username,firstName,lastName,phon
 
 @override
 String toString() {
-  return 'RegisterVendorRequest(username: $username, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, ownerType: $ownerType, revenueItems: $revenueItems, registrationNumber: $registrationNumber, registrationDate: $registrationDate, taxIdentificationNumber: $taxIdentificationNumber, houseNumber: $houseNumber, street: $street, digitalCode: $digitalCode, landmark: $landmark, town: $town, region: $region, countryCode: $countryCode, idType: $idType, idNumber: $idNumber, addressLine1: $addressLine1, addressLine2: $addressLine2, addressLine3: $addressLine3, addressLine4: $addressLine4, dateOfBirth: $dateOfBirth)';
+  return 'RequestAccountUseCaseParams(username: $username, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, ownerType: $ownerType, revenueItems: $revenueItems, registrationNumber: $registrationNumber, registrationDate: $registrationDate, taxIdentificationNumber: $taxIdentificationNumber, houseNumber: $houseNumber, street: $street, digitalCode: $digitalCode, landmark: $landmark, town: $town, region: $region, countryCode: $countryCode, idType: $idType, idNumber: $idNumber, addressLine1: $addressLine1, addressLine2: $addressLine2, addressLine3: $addressLine3, addressLine4: $addressLine4, dateOfBirth: $dateOfBirth)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$RegisterVendorRequestCopyWith<$Res> implements $RegisterVendorRequestCopyWith<$Res> {
-  factory _$RegisterVendorRequestCopyWith(_RegisterVendorRequest value, $Res Function(_RegisterVendorRequest) _then) = __$RegisterVendorRequestCopyWithImpl;
+abstract mixin class _$RequestAccountUseCaseParamsCopyWith<$Res> implements $RequestAccountUseCaseParamsCopyWith<$Res> {
+  factory _$RequestAccountUseCaseParamsCopyWith(_RequestAccountUseCaseParams value, $Res Function(_RequestAccountUseCaseParams) _then) = __$RequestAccountUseCaseParamsCopyWithImpl;
 @override @useResult
 $Res call({
  String username, String firstName, String lastName, String phoneNumber, OwnerType ownerType, List<RevenueItem> revenueItems, String? registrationNumber, DateTime? registrationDate, String? taxIdentificationNumber, String? houseNumber, String? street, String? digitalCode, String? landmark, String? town, String? region, String? countryCode, String? idType, String? idNumber, String? addressLine1, String? addressLine2, String? addressLine3, String? addressLine4, DateTime? dateOfBirth
@@ -299,17 +299,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$RegisterVendorRequestCopyWithImpl<$Res>
-    implements _$RegisterVendorRequestCopyWith<$Res> {
-  __$RegisterVendorRequestCopyWithImpl(this._self, this._then);
+class __$RequestAccountUseCaseParamsCopyWithImpl<$Res>
+    implements _$RequestAccountUseCaseParamsCopyWith<$Res> {
+  __$RequestAccountUseCaseParamsCopyWithImpl(this._self, this._then);
 
-  final _RegisterVendorRequest _self;
-  final $Res Function(_RegisterVendorRequest) _then;
+  final _RequestAccountUseCaseParams _self;
+  final $Res Function(_RequestAccountUseCaseParams) _then;
 
-/// Create a copy of RegisterVendorRequest
+/// Create a copy of RequestAccountUseCaseParams
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? username = null,Object? firstName = null,Object? lastName = null,Object? phoneNumber = null,Object? ownerType = null,Object? revenueItems = null,Object? registrationNumber = freezed,Object? registrationDate = freezed,Object? taxIdentificationNumber = freezed,Object? houseNumber = freezed,Object? street = freezed,Object? digitalCode = freezed,Object? landmark = freezed,Object? town = freezed,Object? region = freezed,Object? countryCode = freezed,Object? idType = freezed,Object? idNumber = freezed,Object? addressLine1 = freezed,Object? addressLine2 = freezed,Object? addressLine3 = freezed,Object? addressLine4 = freezed,Object? dateOfBirth = freezed,}) {
-  return _then(_RegisterVendorRequest(
+  return _then(_RequestAccountUseCaseParams(
 username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable

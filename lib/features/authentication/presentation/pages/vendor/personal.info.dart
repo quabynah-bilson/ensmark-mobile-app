@@ -1,7 +1,8 @@
 part of '../register.vendor.dart';
 
 class _PersonalInfoSheet extends StatefulWidget {
-  const _PersonalInfoSheet();
+  final VendorOnboardingManager manager;
+  const _PersonalInfoSheet(this.manager);
 
   @override
   State<_PersonalInfoSheet> createState() => _PersonalInfoSheetState();
@@ -9,7 +10,6 @@ class _PersonalInfoSheet extends StatefulWidget {
 
 class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationMixin {
   final _formKey = GlobalKey<FormState>(debugLabel: 'personal-info-form');
-  late final _manager = context.read<VendorOnboardingManager>();
 
   @override
   void dispose() {
@@ -20,7 +20,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
   @override
   Widget build(BuildContext context) {
     return BlocConsumer(
-      bloc: _manager,
+      bloc: widget.manager,
       listener: (_, state) {
         if (!mounted) return;
 
@@ -50,14 +50,14 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                   mainAxisSize: MainAxisSize.min,
                   spacing: 16,
                   children: [
-                    AppTextField(
+                    AppTextField<OwnerType>(
                       labelText: 'Account Type',
                       initialValue: state.personalInfo.type.label,
                       validator: validateRequired,
                       fieldType: AppTextFieldType.selector,
                       displayText: (type) => type.label,
                       onItemSelected: (type) =>
-                          _manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(type: type))),
+                          widget.manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(type: type))),
                       items: OwnerType.values,
                     ),
                     Row(
@@ -68,7 +68,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                           labelText: 'First Name',
                           initialValue: state.personalInfo.firstName,
                           onChanged: (value) {
-                            _manager.update(
+                            widget.manager.update(
                               state.copyWith(personalInfo: state.personalInfo.copyWith(firstName: value)),
                             );
                           },
@@ -80,7 +80,9 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                           labelText: 'Last Name',
                           initialValue: state.personalInfo.lastName,
                           onChanged: (value) {
-                            _manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(lastName: value)));
+                            widget.manager.update(
+                              state.copyWith(personalInfo: state.personalInfo.copyWith(lastName: value)),
+                            );
                           },
                           validator: validateRequired,
                           required: true,
@@ -92,7 +94,9 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                       labelText: 'Email Address',
                       initialValue: state.personalInfo.username,
                       onChanged: (value) {
-                        _manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(username: value)));
+                        widget.manager.update(
+                          state.copyWith(personalInfo: state.personalInfo.copyWith(username: value)),
+                        );
                       },
                       validator: validateEmail,
                       fieldType: AppTextFieldType.email,
@@ -101,7 +105,9 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                       labelText: 'Phone Number',
                       initialValue: state.personalInfo.phoneNumber,
                       onChanged: (value) {
-                        _manager.update(state.copyWith(personalInfo: state.personalInfo.copyWith(phoneNumber: value)));
+                        widget.manager.update(
+                          state.copyWith(personalInfo: state.personalInfo.copyWith(phoneNumber: value)),
+                        );
                       },
                       validator: (value) => combineValidators(value, [validateRequired, validatePhoneNumber]),
                       fieldType: AppTextFieldType.number,
@@ -123,7 +129,7 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
                             useRootNavigator: true,
                           );
                           if (selectedDate == null) return;
-                          _manager.update(
+                          widget.manager.update(
                             state.copyWith(personalInfo: state.personalInfo.copyWith(dateOfBirth: selectedDate)),
                           );
                         },
@@ -135,11 +141,11 @@ class _PersonalInfoSheetState extends State<_PersonalInfoSheet> with ValidationM
               ),
               AppButton(
                 text: 'Submit',
-                onPressed: () async {
+                onPressed: () {
                   final validated = _formKey.currentState?.validate() ?? false;
                   if (!validated) return;
                   _formKey.currentState?.save();
-                  _manager.submit();
+                  widget.manager.submit();
                   context.pop();
                 },
               ),

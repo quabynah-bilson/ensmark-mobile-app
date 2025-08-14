@@ -2,6 +2,17 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'location.identity.freezed.dart';
 
+enum IdentityType {
+  nationalId('National ID'),
+  passport('Passport'),
+  driverLicense('Driver License'),
+  businessLicense('Business License'),
+  other('Other');
+
+  final String label;
+  const IdentityType(this.label);
+}
+
 @freezed
 abstract class LocationIdentityState with _$LocationIdentityState {
   const factory LocationIdentityState({
@@ -12,6 +23,8 @@ abstract class LocationIdentityState with _$LocationIdentityState {
     @Default('') String landmark,
     @Default('') String town,
     @Default('') String region,
+    @Default(IdentityType.nationalId) IdentityType idType,
+    @Default('') String idNumber,
     @Default('') String addressLine1,
     @Default('') String addressLine2,
     @Default('') String addressLine3,

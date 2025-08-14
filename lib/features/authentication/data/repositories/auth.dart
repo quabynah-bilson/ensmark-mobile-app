@@ -82,7 +82,8 @@ final class AuthRepositoryImpl extends AuthRepository {
       username: request.username,
       firstName: request.firstName,
       lastName: request.lastName,
-      password: request.password,
+      phoneNumber: request.phoneNumber,
+      dateOfBirth: request.dateOfBirth,
     );
     if (appUser == null) return left(RegistrationFailedException());
     return right(appUser);

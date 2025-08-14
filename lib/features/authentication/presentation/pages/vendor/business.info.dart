@@ -1,7 +1,8 @@
 part of '../register.vendor.dart';
 
 class _BusinessInfoSheet extends StatefulWidget {
-  const _BusinessInfoSheet();
+  const _BusinessInfoSheet(this.manager);
+  final VendorOnboardingManager manager;
 
   @override
   State<_BusinessInfoSheet> createState() => _BusinessInfoSheetState();
@@ -9,7 +10,6 @@ class _BusinessInfoSheet extends StatefulWidget {
 
 class _BusinessInfoSheetState extends State<_BusinessInfoSheet> with ValidationMixin {
   final _formKey = GlobalKey<FormState>(debugLabel: 'business-info-form');
-  late final _manager = context.read<VendorOnboardingManager>();
 
   @override
   void dispose() {
@@ -23,7 +23,7 @@ class _BusinessInfoSheetState extends State<_BusinessInfoSheet> with ValidationM
       backgroundColor: context.colorScheme.surface,
       appBar: AppBar(title: Text('Business Information')),
       body: BlocSelector(
-        bloc: _manager,
+        bloc: widget.manager,
         selector: (VendorOnboardingState state) => state,
         builder: (_, VendorOnboardingState state) => SingleChildScrollView(
           controller: ModalScrollController.of(context),
@@ -52,7 +52,7 @@ class _BusinessInfoSheetState extends State<_BusinessInfoSheet> with ValidationM
                       validator: validateRequired,
                       fieldType: AppTextFieldType.text,
                       onChanged: (value) {
-                        _manager.update(
+                        widget.manager.update(
                           state.copyWith(businessInfo: state.businessInfo.copyWith(registrationNumber: value)),
                         );
                       },
@@ -72,7 +72,7 @@ class _BusinessInfoSheetState extends State<_BusinessInfoSheet> with ValidationM
                           useRootNavigator: true,
                         );
                         if (selectedDate == null) return;
-                        _manager.update(
+                        widget.manager.update(
                           state.copyWith(businessInfo: state.businessInfo.copyWith(registrationDate: selectedDate)),
                         );
                       },
@@ -83,11 +83,11 @@ class _BusinessInfoSheetState extends State<_BusinessInfoSheet> with ValidationM
               ),
               AppButton(
                 text: 'Submit',
-                onPressed: () async {
+                onPressed: () {
                   final validated = _formKey.currentState?.validate() ?? false;
                   if (!validated) return;
                   _formKey.currentState?.save();
-                  _manager.submit();
+                  widget.manager.submit();
                   context.pop();
                 },
               ),

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mobile/features/authentication/domain/entities/owner.type.dart';
 import 'package:mobile/features/authentication/domain/entities/user.dart';
 import 'package:mobile/features/authentication/domain/entities/user.role.dart';
 import 'package:mobile/features/authentication/domain/usecases/auth.status.dart';
@@ -8,6 +9,8 @@ import 'package:mobile/features/authentication/domain/usecases/login.params.dart
 import 'package:mobile/features/authentication/domain/usecases/login.property.owner.dart';
 import 'package:mobile/features/authentication/domain/usecases/login.revenue.officer.dart';
 import 'package:mobile/features/authentication/domain/usecases/logout.dart';
+import 'package:mobile/features/authentication/domain/usecases/request.account.dart';
+import 'package:mobile/features/shared/domain/entities/revenue.item.dart';
 
 part 'auth.freezed.dart';
 
@@ -27,14 +30,15 @@ final class UserAuthManager extends Cubit<UserAuthState> {
     this._logoutUseCase,
     this._checkAuthStatusUseCase,
     this._currentUserUseCase,
-  ) : super(UserAuthState()) {
-    _checkAuthStatus();
-  }
+    this._requestAccountUseCase,
+  ) : super(UserAuthState());
+
   final LoginPropertyOwnerUseCase _loginPropertyOwnerUseCase;
   final LoginRevenueOfficerUseCase _loginRevenueOfficerUseCase;
   final LogoutUseCase _logoutUseCase;
   final CheckAuthStatusUseCase _checkAuthStatusUseCase;
   final CurrentUserUseCase _currentUserUseCase;
+  final RequestAccountUseCase _requestAccountUseCase;
 
   AppUser? get currentUser => state.user;
 
@@ -75,7 +79,7 @@ final class UserAuthManager extends Cubit<UserAuthState> {
     emit(state.copyWith(authenticating: false));
   }
 
-  void _checkAuthStatus() async {
+  void checkAuthStatus() async {
     final authed = await authenticated;
     if (!authed) return;
 
@@ -83,6 +87,64 @@ final class UserAuthManager extends Cubit<UserAuthState> {
     result.fold(
       (l) => emit(state.copyWith(errorMessage: l)),
       (user) => emit(state.copyWith(errorMessage: null, user: user)),
+    );
+  }
+
+  Future<void> submitRequest({
+    required String firstName,
+    required String lastName,
+    required String username,
+    required String phoneNumber,
+    required OwnerType ownerType,
+    required List<RevenueItem> revenueItems,
+    required String registrationNumber,
+    DateTime? registrationDate,
+    required String taxIdentificationNumber,
+    required String houseNumber,
+    required String street,
+    required String digitalCode,
+    required String landmark,
+    required String town,
+    required String region,
+    required String country,
+    required String idType,
+    required String idNumber,
+    required String addressLine1,
+    required String addressLine2,
+    required String addressLine3,
+    required String addressLine4,
+    DateTime? dateOfBirth,
+  }) async {
+    emit(state.copyWith(authenticating: true));
+    final params = RequestAccountUseCaseParams(
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      phoneNumber: phoneNumber,
+      ownerType: ownerType,
+      revenueItems: revenueItems,
+      registrationNumber: registrationNumber,
+      registrationDate: registrationDate,
+      taxIdentificationNumber: taxIdentificationNumber,
+      houseNumber: houseNumber,
+      street: street,
+      digitalCode: digitalCode,
+      landmark: landmark,
+      town: town,
+      region: region,
+      countryCode: country,
+      idType: idType,
+      idNumber: idNumber,
+      addressLine1: addressLine1,
+      addressLine2: addressLine2,
+      addressLine3: addressLine3,
+      addressLine4: addressLine4,
+      dateOfBirth: dateOfBirth,
+    );
+    final result = await _requestAccountUseCase(params);
+    result.fold(
+      (l) => emit(state.copyWith(authenticating: false, errorMessage: l)),
+      (user) => emit(state.copyWith(user: user, authenticating: false, errorMessage: null)),
     );
   }
 

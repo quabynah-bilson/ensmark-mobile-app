@@ -1,9 +1,7 @@
 part of 'router.dart';
 
-class ModalBottomSheetPage<T> extends Page<T> {
-  final Widget child;
-
-  const ModalBottomSheetPage({required this.child, super.key});
+class ModalBottomSheetPage<T> extends MaterialPage<T> {
+  const ModalBottomSheetPage({required super.child});
 
   @override
   Route<T> createRoute(BuildContext context) =>

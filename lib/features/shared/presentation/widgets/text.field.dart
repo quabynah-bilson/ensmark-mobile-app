@@ -8,7 +8,7 @@ import 'package:shared_utils/shared_utils.dart' show ContextX;
 import 'package:styled_widget/styled_widget.dart';
 
 /// An enumeration for different text field types to simplify configuration.
-enum AppTextFieldType { text, password, number, email, selector }
+enum AppTextFieldType { text, password, number, email, selector, address, identity }
 
 /// A reusable and customizable text form field widget for the application.
 class AppTextField<T> extends StatefulWidget {
@@ -32,6 +32,7 @@ class AppTextField<T> extends StatefulWidget {
   final void Function(T)? onItemSelected;
   final VoidCallback? onTap;
   final String? initialValue;
+  final String? helperText;
 
   const AppTextField({
     super.key,
@@ -53,6 +54,7 @@ class AppTextField<T> extends StatefulWidget {
     this.readOnly = false,
     this.initialValue,
     this.onTap,
+    this.helperText,
   }) : assert(
          fieldType != AppTextFieldType.selector || (items != null && onItemSelected != null && displayText != null),
          'For selector type, `displayText`,`items` and `onItemSelected` must be provided.',
@@ -64,9 +66,44 @@ class AppTextField<T> extends StatefulWidget {
 
 class _AppTextFieldState<T> extends State<AppTextField<T>> {
   TextEditingController? _controller;
-
+  bool _ownsController = false;
   // State variable to manage password visibility.
   bool _obscureText = true;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.fieldType == AppTextFieldType.selector) {
+      _controller = TextEditingController(text: widget.initialValue);
+      _ownsController = true;
+    } else {
+      if (widget.controller != null) {
+        _controller = widget.controller;
+        _ownsController = false;
+      } else {
+        _controller = TextEditingController(text: widget.initialValue);
+        _ownsController = true;
+      }
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant AppTextField<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final initialChanged = widget.initialValue != oldWidget.initialValue;
+    // Keep the text in sync with updated initialValue when we manage the controller.
+    if (_ownsController && initialChanged) {
+      _controller?.text = widget.initialValue ?? '';
+    }
+  }
+
+  @override
+  void dispose() {
+    if (_ownsController) {
+      _controller?.dispose();
+    }
+    super.dispose();
+  }
 
   /// Shows the modal bottom sheet for the selector type.
   Future<void> _showSelectorModal() async {
@@ -106,14 +143,6 @@ class _AppTextFieldState<T> extends State<AppTextField<T>> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _controller = widget.controller ?? TextEditingController();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final responsiveWidth = context.width;
 
@@ -126,7 +155,6 @@ class _AppTextFieldState<T> extends State<AppTextField<T>> {
         textInputAction: widget.action,
         onTap: _showSelectorModal,
         onChanged: widget.onChanged,
-        initialValue: widget.initialValue,
         // Shows the modal on tap
         validator: widget.validator,
         decoration: InputDecoration(
@@ -170,10 +198,10 @@ class _AppTextFieldState<T> extends State<AppTextField<T>> {
       validator: widget.validator,
       onChanged: widget.onChanged,
       textInputAction: widget.action,
-      initialValue: widget.initialValue,
       enabled: widget.enabled,
       inputFormatters: _inputFormatters,
       decoration: InputDecoration(
+        helperText: widget.helperText,
         floatingLabelBehavior: widget.hasFloatingLabel ? FloatingLabelBehavior.auto : FloatingLabelBehavior.never,
         label: Row(
           mainAxisSize: MainAxisSize.min,
@@ -206,6 +234,10 @@ class _AppTextFieldState<T> extends State<AppTextField<T>> {
         return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9@._+-]'))];
       case AppTextFieldType.password:
         return [FilteringTextInputFormatter.singleLineFormatter];
+      case AppTextFieldType.address:
+        return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9.\-/\s]'))];
+      case AppTextFieldType.identity:
+        return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9-]'))];
       default:
         return <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]'))];
     }

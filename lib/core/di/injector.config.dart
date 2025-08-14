@@ -32,6 +32,8 @@ import 'package:mobile/features/authentication/domain/usecases/login.revenue.off
     as _i984;
 import 'package:mobile/features/authentication/domain/usecases/logout.dart'
     as _i666;
+import 'package:mobile/features/authentication/domain/usecases/request.account.dart'
+    as _i622;
 import 'package:mobile/features/shared/data/datasources/local/revenue.item.dart'
     as _i3;
 import 'package:mobile/features/shared/data/repositories/revenue.item.dart'
@@ -59,21 +61,21 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    final databaseModule = _$DatabaseModule();
     final apiClientModule = _$ApiClientModule();
+    final databaseModule = _$DatabaseModule();
     final storageModule = _$StorageModule();
+    gh.factory<_i1017.ClientChannel>(() => apiClientModule.channelOpts);
     await gh.factoryAsync<_i338.Isar>(
       () => databaseModule.db,
       preResolve: true,
     );
-    gh.factory<_i1017.ClientChannel>(() => apiClientModule.channelOpts);
     gh.singleton<_i558.FlutterSecureStorage>(() => storageModule.secureStorage);
     gh.singleton<_i346.AuthUserLocalDataSource>(
         () => _i346.AuthUserLocalDataSource(
               gh<_i558.FlutterSecureStorage>(),
               gh<_i338.Isar>(),
             ));
-    gh.singleton<_i3.RevenueItemLocalDataSource>(
+    gh.lazySingleton<_i3.RevenueItemLocalDataSource>(
         () => _i3.RevenueItemLocalDataSource(gh<_i338.Isar>()));
     await gh.factoryAsync<_i281.UserServiceClient>(
       () => apiClientModule.userClient(gh<_i558.FlutterSecureStorage>()),
@@ -103,24 +105,26 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i558.FlutterSecureStorage>(),
           gh<_i346.AuthUserLocalDataSource>(),
         ));
-    gh.singleton<_i290.GetRevenueItemsUseCase>(
+    gh.lazySingleton<_i290.GetRevenueItemsUseCase>(
         () => _i290.GetRevenueItemsUseCase(gh<_i552.RevenueItemRepository>()));
     gh.singleton<_i984.LoginRevenueOfficerUseCase>(
         () => _i984.LoginRevenueOfficerUseCase(gh<_i830.AuthRepository>()));
     gh.singleton<_i266.CheckAuthStatusUseCase>(
         () => _i266.CheckAuthStatusUseCase(gh<_i830.AuthRepository>()));
+    gh.singleton<_i1017.CurrentUserUseCase>(
+        () => _i1017.CurrentUserUseCase(gh<_i830.AuthRepository>()));
     gh.singleton<_i666.LogoutUseCase>(
         () => _i666.LogoutUseCase(gh<_i830.AuthRepository>()));
     gh.singleton<_i823.LoginPropertyOwnerUseCase>(
         () => _i823.LoginPropertyOwnerUseCase(gh<_i830.AuthRepository>()));
-    gh.singleton<_i1017.CurrentUserUseCase>(
-        () => _i1017.CurrentUserUseCase(gh<_i830.AuthRepository>()));
+    gh.lazySingleton<_i622.RequestAccountUseCase>(
+        () => _i622.RequestAccountUseCase(gh<_i830.AuthRepository>()));
     return this;
   }
 }
 
-class _$DatabaseModule extends _i431.DatabaseModule {}
-
 class _$ApiClientModule extends _i131.ApiClientModule {}
+
+class _$DatabaseModule extends _i431.DatabaseModule {}
 
 class _$StorageModule extends _i750.StorageModule {}

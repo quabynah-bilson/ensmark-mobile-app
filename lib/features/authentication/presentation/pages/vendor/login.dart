@@ -11,7 +11,7 @@ class _VendorLoginSheetState extends State<_VendorLoginSheet> with ValidationMix
   final _formKey = GlobalKey<FormState>(debugLabel: 'login-form');
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  late final _authController = context.read<UserAuthManager>();
+  late final _authController = UserAuthManager(sl(), sl(), sl(), sl(), sl(), sl());
 
   @override
   void dispose() {

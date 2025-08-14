@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobile/core/constants.dart';
+import 'package:mobile/features/authentication/presentation/manager/auth.dart';
 import 'package:shared_utils/shared_utils.dart' show ContextX;
 import 'package:mobile/core/routing/router.dart';
 import 'package:mobile/features/shared/presentation/widgets/button.dart';
@@ -19,56 +21,74 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  late final _authManager = context.read<UserAuthManager>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _authManager.checkAuthStatus());
+  }
+
   @override
   Widget build(BuildContext context) {
-    return AnimationLimiter(
-      child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: context.colorScheme.surface,
-          foregroundColor: context.colorScheme.onSurface,
-          icon: Icon(TablerIcons.player_play),
-          tooltip: 'Get started',
-          label: Text('Get started'),
-          onPressed: _showGetStartedSheet,
-        ),
-        body: Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(Assets.imgWelcomeImage, fit: BoxFit.cover, alignment: Alignment.bottomCenter),
-            ),
-            Positioned.fill(child: Container(color: context.colorScheme.onSurface.withValues(alpha: 0.15))),
-            Positioned(
-              top: context.height * 0.15,
-              left: 16,
-              right: 16,
-              height: context.height * 0.3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                spacing: 16,
-                children: AnimationConfiguration.toStaggeredList(
-                  duration: const Duration(milliseconds: 500),
-                  childAnimationBuilder: (widget) => SlideAnimation(
-                    verticalOffset: context.height * 0.1,
-                    child: FadeInAnimation(child: widget),
+    return BlocListener(
+      bloc: _authManager,
+      listener: (_, UserAuthState state) {
+        if (!mounted) return;
+        debugPrint('current state on welcome page: ${state.user?.guid}');
+        if (state.user == null) return;
+        if (state.user!.verified == true) return context.go(AppRoutes.dashboard);
+        context.go(AppRoutes.verifyVendor.replaceFirst(':token', state.user!.guid));
+      },
+      child: AnimationLimiter(
+        child: Scaffold(
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: FloatingActionButton.extended(
+            backgroundColor: context.colorScheme.surface,
+            foregroundColor: context.colorScheme.onSurface,
+            icon: Icon(TablerIcons.player_play),
+            tooltip: 'Get started',
+            label: Text('Get started'),
+            onPressed: _showGetStartedSheet,
+          ),
+          body: Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(Assets.imgWelcomeImage, fit: BoxFit.cover, alignment: Alignment.bottomCenter),
+              ),
+              Positioned.fill(child: Container(color: context.colorScheme.onSurface.withValues(alpha: 0.15))),
+              Positioned(
+                top: context.height * 0.15,
+                left: 16,
+                right: 16,
+                height: context.height * 0.3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 16,
+                  children: AnimationConfiguration.toStaggeredList(
+                    duration: const Duration(milliseconds: 500),
+                    childAnimationBuilder: (widget) => SlideAnimation(
+                      verticalOffset: context.height * 0.1,
+                      child: FadeInAnimation(child: widget),
+                    ),
+                    children: [
+                      Text(
+                        'Your Property Management Simplified',
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.headlineLarge?.copyWith(color: context.colorScheme.surface),
+                      ),
+                      Text(
+                        'Manage your properties, payments, and notifications all in one place',
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.surface),
+                      ),
+                    ],
                   ),
-                  children: [
-                    Text(
-                      'Your Property Management Simplified',
-                      textAlign: TextAlign.center,
-                      style: context.textTheme.headlineLarge?.copyWith(color: context.colorScheme.surface),
-                    ),
-                    Text(
-                      'Manage your properties, payments, and notifications all in one place',
-                      textAlign: TextAlign.center,
-                      style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.surface),
-                    ),
-                  ],
-                ),
-              ).padding(horizontal: 16),
-            ),
-          ],
+                ).padding(horizontal: 16),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -104,15 +124,17 @@ class _WelcomePageState extends State<WelcomePage> {
               children: [
                 AppButton(
                   text: 'Continue as Property Owner',
-                  onPressed: () => context
-                    ..pop()
-                    ..push(AppRoutes.registerVendor),
+                  onPressed: () {
+                    context.pop();
+                    context.push(AppRoutes.registerVendor);
+                  },
                 ),
                 AppButton.outlined(
                   text: 'Continue as Revenue Officer',
-                  onPressed: () => context
-                    ..pop()
-                    ..push(AppRoutes.loginRevenueOfficer),
+                  onPressed: () {
+                    context.pop();
+                    context.push(AppRoutes.loginRevenueOfficer);
+                  },
                 ),
               ],
             ),

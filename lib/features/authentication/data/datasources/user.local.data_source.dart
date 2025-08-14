@@ -4,7 +4,6 @@ import 'package:isar/isar.dart';
 import 'package:mobile/core/storage.keys.dart';
 import 'package:mobile/features/authentication/domain/entities/user.dart';
 import 'package:mobile/features/authentication/domain/entities/user.role.dart';
-import 'package:uuid/uuid.dart';
 
 @singleton
 final class AuthUserLocalDataSource {
@@ -18,17 +17,21 @@ final class AuthUserLocalDataSource {
     required String username,
     required String firstName,
     required String lastName,
-    required String password,
+    required String phoneNumber,
+    DateTime? dateOfBirth,
+    String? password,
   }) async {
     AppUser user = AppUser();
-    user.guid = Uuid().v7();
     user.username = username;
-    user.password = password;
+    user.password = password ?? '';
     user.role = role;
     user.firstName = firstName;
     user.lastName = lastName;
-    _db.appUsers.put(user);
-    return _db.appUsers.getAsync(user.guid);
+    user.phoneNumber = phoneNumber;
+    user.dateOfBirth = dateOfBirth;
+    user.verified = false;
+    _db.write((db) => db.appUsers.put(user));
+    return _db.appUsers.where().usernameEqualTo(user.username).build().findFirstAsync();
   }
 
   Future<AppUser?> get currentUser async {

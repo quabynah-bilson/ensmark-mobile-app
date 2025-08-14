@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:mobile/features/shared/domain/repositories/revenue.item.dart';
 import 'package:mobile/features/shared/domain/entities/revenue.item.dart';
 
-@singleton
+@lazySingleton
 class GetRevenueItemsUseCase implements NoParamsUseCase<List<RevenueItem>> {
   final RevenueItemRepository _repository;
 
