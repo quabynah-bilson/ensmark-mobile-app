@@ -19,7 +19,7 @@ class _RevenueItemsSheetState extends State<_RevenueItemsSheet> {
         final items = widget.revenueItems;
         return Scaffold(
           backgroundColor: context.colorScheme.surface,
-          appBar: AppBar(title: Text('Select Revenue Items')),
+          appBar: AppBar(title: Text('Select Revenue Portfolios')),
           body: SingleChildScrollView(
             controller: ModalScrollController.of(context),
             padding: const EdgeInsets.all(24),
@@ -38,7 +38,6 @@ class _RevenueItemsSheetState extends State<_RevenueItemsSheet> {
                       value: selected,
                       controlAffinity: ListTileControlAffinity.leading,
                       title: Text(ri.description),
-                      subtitle: Text(ri.code),
                       onChanged: (checked) {
                         final current = state.revenueItems.revenueItems;
                         if (checked == true) {

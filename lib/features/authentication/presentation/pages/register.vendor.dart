@@ -119,8 +119,8 @@ class _RegisterVendorPageState extends State<RegisterVendorPage> {
                           },
                           OnboardingStepperTile(
                             data: OnboardingStepperData(
-                              title: 'Location & Identity',
-                              subtitle: 'Provide your location and verify your identity information',
+                              title: 'Address & Identity',
+                              subtitle: 'Provide your address and verify your identity information',
                               isCompleted: voState.completedSteps.contains(VendorOnboardingStep.locationIdentity),
                             ),
                             onTap: () => showCupertinoModalBottomSheet(
@@ -136,7 +136,7 @@ class _RegisterVendorPageState extends State<RegisterVendorPage> {
                             builder: (_, revenueItems) {
                               return OnboardingStepperTile(
                                 data: OnboardingStepperData(
-                                  title: 'Revenue Items',
+                                  title: 'Revenue Portfolios',
                                   subtitle: 'Select the permits you’re applying for with this account',
                                   isCompleted: voState.revenueItems.revenueItems.isNotEmpty,
                                 ),
