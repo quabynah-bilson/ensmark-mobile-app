@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobile/core/routing/router.dart';
 import 'package:mobile/features/authentication/presentation/manager/auth.dart';
@@ -213,7 +212,7 @@ class _VendorVerificationPageState extends State<VendorVerificationPage> {
                           padding: const EdgeInsets.only(bottom: 12),
                           child: AppButton.outlined(text: 'Contact Support', onPressed: _contactSupport),
                         ),
-                        AppButton(text: 'Check Status', onPressed: _checkStatus),
+                        AppButton(text: 'Check Status', onPressed: () => _checkStatus()),
                       ],
                     ),
                   ).padding(vertical: 16),
@@ -294,9 +293,9 @@ class _VendorVerificationPageState extends State<VendorVerificationPage> {
     );
   }
 
-  void _checkStatus() {
+  Future<void> _checkStatus() async {
     // Refresh the auth status
-    _authManager.checkAuthStatus();
+    await _authManager.checkAuthStatus();
     context.showSnackBar(
       'Status checked. You\'ll be notified of any updates.',
       context.colorScheme.primary,

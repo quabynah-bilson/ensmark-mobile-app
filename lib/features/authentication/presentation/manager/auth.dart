@@ -79,7 +79,7 @@ final class UserAuthManager extends Cubit<UserAuthState> {
     emit(state.copyWith(authenticating: false));
   }
 
-  void checkAuthStatus() async {
+  Future<void> checkAuthStatus() async {
     final authed = await authenticated;
     if (!authed) return;
 
