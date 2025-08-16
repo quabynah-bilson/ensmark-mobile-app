@@ -1,13 +1,15 @@
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mobile/features/shared/domain/entities/revenue.item.dart';
 import 'package:mobile/features/shared/domain/usecases/get.revenue.items.dart';
 
-part 'revenue.item.freezed.dart';
+part 'revenue.item.mapper.dart';
 
-@freezed
-abstract class RevenueItemState with _$RevenueItemState {
-  const factory RevenueItemState({@Default([]) List<RevenueItem> revenueItems}) = _RevenueItemState;
+@MappableClass()
+class RevenueItemState with RevenueItemStateMappable {
+  const RevenueItemState({this.revenueItems = const []});
+
+  final List<RevenueItem> revenueItems;
 }
 
 class RevenueItemManager extends Cubit<RevenueItemState> {

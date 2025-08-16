@@ -9,4 +9,6 @@ final class AppConstants {
 
   static const String appName = 'Ensmark';
   static const String preferredDatePattern = 'dd/MM/yyyy';
+
+  static const String supportPhoneNumber = '+233232019020';
 }

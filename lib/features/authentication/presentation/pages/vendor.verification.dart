@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mobile/core/constants.dart';
 import 'package:mobile/core/routing/router.dart';
 import 'package:mobile/features/authentication/presentation/manager/auth.dart';
 import 'package:mobile/features/shared/presentation/widgets/button.dart';
 import 'package:mobile/generated/assets.dart';
 import 'package:shared_utils/shared_utils.dart' show ContextX;
 import 'package:styled_widget/styled_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VendorVerificationPage extends StatefulWidget {
   const VendorVerificationPage({super.key, required this.args});
@@ -34,6 +37,23 @@ class _VendorVerificationPageState extends State<VendorVerificationPage> {
             state.errorMessage!,
             context.colorScheme.errorContainer,
             context.colorScheme.onErrorContainer,
+          );
+        }
+
+        if (state.user?.verified == true) {
+          context.go(AppRoutes.createPassword.replaceFirst(':token', state.user!.guid));
+          context.showSnackBar(
+            'Your account has been verified. You can now create a password to login.',
+            context.colorScheme.primary,
+            context.colorScheme.onPrimary,
+          );
+        }
+
+        if (state.user?.verified == false) {
+          context.showSnackBar(
+            'Your account is still under review. We\'ll notify you once it\'s been verified.',
+            context.colorScheme.primary,
+            context.colorScheme.onPrimary,
           );
         }
       },
@@ -285,21 +305,10 @@ class _VendorVerificationPageState extends State<VendorVerificationPage> {
   }
 
   void _contactSupport() {
-    // TODO: Implement contact support functionality
-    context.showSnackBar(
-      'Support contact feature coming soon',
-      context.colorScheme.primary,
-      context.colorScheme.onPrimary,
-    );
+    launchUrl(Uri.parse('tel:${AppConstants.supportPhoneNumber}'));
   }
 
   Future<void> _checkStatus() async {
-    // Refresh the auth status
-    await _authManager.checkAuthStatus();
-    context.showSnackBar(
-      'Status checked. You\'ll be notified of any updates.',
-      context.colorScheme.primary,
-      context.colorScheme.onPrimary,
-    );
+    await _authManager.checkAuthStatus(passwordReset: true);
   }
 }

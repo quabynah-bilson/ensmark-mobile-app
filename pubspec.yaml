@@ -27,7 +27,6 @@ dependencies:
   go_router:
   firebase_core:
   firebase_auth:
-  freezed_annotation:
   json_annotation: ^4.9.0
   flutter_svg:
   bloc:
@@ -36,7 +35,7 @@ dependencies:
   image_picker:
   get_it:
   dartz:
-  faker:
+  faker: ^2.2.0
   injectable:
   flutter_tabler_icons:
   async:
@@ -64,18 +63,20 @@ dependencies:
       url: https://github.com/quabynah-bilson/api_utils.git
   path_provider:
   workmanager: ^0.9.0+2
+  dart_mappable: ^4.6.0
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints:
   build_runner:
-  freezed:
   json_serializable:
   dotenv:
   flutter_launcher_icons:
   flutter_native_splash:
   injectable_generator:
+  dart_mappable_builder: ^4.3.1+1
 
 flutter_assets:
   assets_path:

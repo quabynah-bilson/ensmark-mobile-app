@@ -1,10 +1,13 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mobile/features/authentication/domain/entities/user.role.dart' show UserRole;
+import 'package:dart_mappable/dart_mappable.dart';
+import 'package:mobile/features/authentication/domain/entities/user.role.dart';
 
-part 'login.params.freezed.dart';
+part 'login.params.mapper.dart';
 
-@freezed
-abstract class LoginParams with _$LoginParams {
-  const factory LoginParams({required UserRole role, required String username, required String password}) =
-      _LoginParams;
+@MappableClass()
+class LoginParams with LoginParamsMappable {
+  LoginParams({required this.role, required this.username, required this.password});
+
+  final UserRole role;
+  final String username;
+  final String password;
 }

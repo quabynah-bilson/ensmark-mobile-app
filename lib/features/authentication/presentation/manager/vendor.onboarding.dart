@@ -1,27 +1,34 @@
 import 'package:bloc/bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mobile/features/authentication/domain/entities/owner.type.dart';
-
+import 'package:dart_mappable/dart_mappable.dart';
 import 'vendor/business.info.dart';
 import 'vendor/location.identity.dart';
 import 'vendor/personal.info.dart';
 import 'vendor/revenue.items.dart';
 
-part 'vendor.onboarding.freezed.dart';
+part 'vendor.onboarding.mapper.dart';
 
 enum VendorOnboardingStep { personalInfo, businessInfo, locationIdentity, revenueItems }
 
-@freezed
-abstract class VendorOnboardingState with _$VendorOnboardingState {
-  const factory VendorOnboardingState({
-    @Default(0) int currentStep,
-    @Default(4) int totalSteps,
-    required Set<VendorOnboardingStep> completedSteps,
-    @Default(PersonalInfoState()) PersonalInfoState personalInfo,
-    @Default(BusinessInfoState()) BusinessInfoState businessInfo,
-    @Default(LocationIdentityState()) LocationIdentityState locationIdentity,
-    @Default(RevenueItemsState()) RevenueItemsState revenueItems,
-  }) = _VendorOnboardingState;
+@MappableClass()
+class VendorOnboardingState with VendorOnboardingStateMappable {
+  const VendorOnboardingState({
+    this.currentStep = 0,
+    this.totalSteps = 4,
+    this.completedSteps = const {},
+    this.personalInfo = const PersonalInfoState(),
+    this.businessInfo = const BusinessInfoState(),
+    this.locationIdentity = const LocationIdentityState(),
+    this.revenueItems = const RevenueItemsState(),
+  });
+
+  final int currentStep;
+  final int totalSteps;
+  final Set<VendorOnboardingStep> completedSteps;
+  final PersonalInfoState personalInfo;
+  final BusinessInfoState businessInfo;
+  final LocationIdentityState locationIdentity;
+  final RevenueItemsState revenueItems;
 }
 
 class VendorOnboardingManager extends Cubit<VendorOnboardingState> {

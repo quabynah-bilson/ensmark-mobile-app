@@ -5,7 +5,7 @@ import 'package:mobile/core/constants.dart';
 import 'package:mobile/core/exceptions/auth.dart';
 import 'package:mobile/core/exceptions/base.dart' show BaseException;
 import 'package:mobile/core/storage.keys.dart';
-import 'package:mobile/features/authentication/data/datasources/user.local.data_source.dart';
+import 'package:mobile/features/authentication/data/datasources/user.local.dart';
 import 'package:mobile/features/authentication/domain/entities/register.vendor.dart';
 import 'package:mobile/features/authentication/domain/entities/user.dart';
 import 'package:mobile/features/authentication/domain/entities/user.role.dart';
@@ -64,6 +64,19 @@ final class AuthRepositoryImpl extends AuthRepository {
     // TODO: implement resetPassword
     await Future.delayed(AppConstants.simulatedDuration);
     return right('Password updated successfully');
+  }
+
+  @override
+  Future<Either<BaseException<void>, AppUser>> createPassword({
+    required String password,
+    required String confirmPassword,
+    required String guid,
+  }) async {
+    //!todo - implement create password
+    await Future.delayed(AppConstants.simulatedDuration);
+    final user = await _ds.getUserByGuid(guid: guid);
+    if (user == null) return left(UserNotFoundException());
+    return right(user);
   }
 
   @override

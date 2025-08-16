@@ -62,7 +62,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     switch (role) {
       case UserRole.owner:
         return const [
-          BottomNavigationBarItem(icon: Icon(TablerIcons.home_2), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(TablerIcons.home_2), label: 'Explore'),
           BottomNavigationBarItem(icon: Icon(TablerIcons.credit_card), label: 'Payments'),
           BottomNavigationBarItem(icon: Icon(TablerIcons.notification), label: 'Notifications'),
           BottomNavigationBarItem(icon: Icon(TablerIcons.user_cog), label: 'Profile'),

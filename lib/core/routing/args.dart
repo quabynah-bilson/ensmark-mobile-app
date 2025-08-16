@@ -1,8 +1,15 @@
 part of 'router.dart';
 
-@freezed
-abstract class VendorVerificationPageArgs with _$VendorVerificationPageArgs {
-  const factory VendorVerificationPageArgs({required Map<String, String> params}) = _VendorVerificationPageArgs;
+@MappableClass()
+class VendorVerificationPageArgs with VendorVerificationPageArgsMappable {
+  const VendorVerificationPageArgs({required this.token});
 
-  factory VendorVerificationPageArgs.fromJson(Map<String, dynamic> json) => _$VendorVerificationPageArgsFromJson(json);
+  final String token;
+}
+
+@MappableClass()
+class CreatePasswordPageArgs with CreatePasswordPageArgsMappable {
+  const CreatePasswordPageArgs({required this.token});
+
+  final String token;
 }

@@ -1,9 +1,11 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:mobile/features/shared/domain/entities/revenue.item.dart';
 
-part 'revenue.items.freezed.dart';
+part 'revenue.items.mapper.dart';
 
-@freezed
-abstract class RevenueItemsState with _$RevenueItemsState {
-  const factory RevenueItemsState({@Default([]) List<RevenueItem> revenueItems}) = _RevenueItemsState;
+@MappableClass()
+class RevenueItemsState with RevenueItemsStateMappable {
+  const RevenueItemsState({this.revenueItems = const []});
+
+  final List<RevenueItem> revenueItems;
 }

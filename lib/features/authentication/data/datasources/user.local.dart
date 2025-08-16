@@ -55,4 +55,9 @@ final class AuthUserLocalDataSource {
     var appUser = await _db.appUsers.where().usernameEqualTo(username).and().roleEqualTo(role).build().findFirstAsync();
     return appUser;
   }
+
+  Future<AppUser?> getUserByGuid({required String guid}) async {
+    var appUser = await _db.appUsers.where().guidEqualTo(guid).build().findFirstAsync();
+    return appUser;
+  }
 }

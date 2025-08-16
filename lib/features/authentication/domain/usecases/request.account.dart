@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:api_utils/api_utils.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobile/features/authentication/domain/entities/owner.type.dart';
 import 'package:mobile/features/authentication/domain/entities/register.vendor.dart';
@@ -9,35 +9,59 @@ import 'package:mobile/features/authentication/domain/entities/user.dart';
 import 'package:mobile/features/authentication/domain/repositories/auth.dart';
 import 'package:mobile/features/shared/domain/entities/revenue.item.dart';
 
-part 'request.account.freezed.dart';
+part 'request.account.mapper.dart';
 
-@freezed
-abstract class RequestAccountUseCaseParams with _$RequestAccountUseCaseParams {
-  const factory RequestAccountUseCaseParams({
-    required String username,
-    required String firstName,
-    required String lastName,
-    required String phoneNumber,
-    required OwnerType ownerType,
-    required List<RevenueItem> revenueItems,
-    String? registrationNumber,
-    DateTime? registrationDate,
-    String? taxIdentificationNumber,
-    String? houseNumber,
-    String? street,
-    String? digitalCode,
-    String? landmark,
-    String? town,
-    String? region,
-    String? countryCode,
-    String? idType,
-    String? idNumber,
-    String? addressLine1,
-    String? addressLine2,
-    String? addressLine3,
-    String? addressLine4,
-    DateTime? dateOfBirth,
-  }) = _RequestAccountUseCaseParams;
+@MappableClass()
+class RequestAccountUseCaseParams with RequestAccountUseCaseParamsMappable {
+  const RequestAccountUseCaseParams({
+    this.username = '',
+    this.firstName = '',
+    this.lastName = '',
+    this.phoneNumber = '',
+    this.ownerType = OwnerType.individual,
+    this.revenueItems = const [],
+    this.registrationNumber,
+    this.registrationDate,
+    this.taxIdentificationNumber,
+    this.houseNumber,
+    this.street,
+    this.digitalCode,
+    this.landmark,
+    this.town,
+    this.region,
+    this.countryCode,
+    this.idType,
+    this.idNumber,
+    this.addressLine1,
+    this.addressLine2,
+    this.addressLine3,
+    this.addressLine4,
+    this.dateOfBirth,
+  });
+
+  final String username;
+  final String firstName;
+  final String lastName;
+  final String phoneNumber;
+  final OwnerType ownerType;
+  final List<RevenueItem> revenueItems;
+  final String? registrationNumber;
+  final DateTime? registrationDate;
+  final String? taxIdentificationNumber;
+  final String? houseNumber;
+  final String? street;
+  final String? digitalCode;
+  final String? landmark;
+  final String? town;
+  final String? region;
+  final String? countryCode;
+  final String? idType;
+  final String? idNumber;
+  final String? addressLine1;
+  final String? addressLine2;
+  final String? addressLine3;
+  final String? addressLine4;
+  final DateTime? dateOfBirth;
 }
 
 @lazySingleton

@@ -1,9 +1,11 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
-part 'business.info.freezed.dart';
+part 'business.info.mapper.dart';
 
-@freezed
-abstract class BusinessInfoState with _$BusinessInfoState {
-  const factory BusinessInfoState({@Default('') String registrationNumber, DateTime? registrationDate}) =
-      _BusinessInfoState;
+@MappableClass()
+class BusinessInfoState with BusinessInfoStateMappable {
+  const BusinessInfoState({this.registrationNumber = '', this.registrationDate});
+
+  final String registrationNumber;
+  final DateTime? registrationDate;
 }

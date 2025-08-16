@@ -27,5 +27,11 @@ abstract class AuthRepository {
     required String password,
   });
 
+  Future<Either<BaseException<void>, AppUser>> createPassword({
+    required String password,
+    required String confirmPassword,
+    required String guid,
+  });
+
   Future<Either<BaseException<AppUser>, AppUser>> get currentUser;
 }

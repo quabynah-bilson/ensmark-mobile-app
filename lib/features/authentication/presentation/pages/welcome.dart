@@ -35,7 +35,6 @@ class _WelcomePageState extends State<WelcomePage> {
       bloc: _authManager,
       listener: (_, UserAuthState state) {
         if (!mounted) return;
-        debugPrint('current state on welcome page: ${state.user?.guid}');
         if (state.user == null) return;
         if (state.user!.verified == true) return context.go(AppRoutes.dashboard);
         context.go(AppRoutes.verifyVendor.replaceFirst(':token', state.user!.guid));

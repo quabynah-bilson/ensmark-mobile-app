@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/di/injector.dart';
 import 'package:mobile/features/authentication/presentation/manager/auth.dart';
+import 'package:mobile/features/authentication/presentation/manager/password.dart';
 import 'package:mobile/features/authentication/presentation/manager/vendor.onboarding.dart';
 import 'package:mobile/features/pages.dart';
 import 'package:mobile/features/shared/presentation/manager/revenue.item.dart';
 import 'package:mobile/features/shared/presentation/pages/dashboard.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 part 'args.dart';
 part 'custom.routes.dart';
-part 'router.freezed.dart';
-part 'router.g.dart';
+part 'router.mapper.dart';
 part 'routes.dart';
 
 final appRouterNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'app-router');
@@ -53,11 +53,23 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.verifyVendor,
       pageBuilder: (_, state) {
-        final args = VendorVerificationPageArgs(params: state.pathParameters);
+        final args = VendorVerificationPageArgs(token: state.pathParameters['token']!);
         return MaterialPage(
           child: BlocProvider(
             create: (_) => UserAuthManager(sl(), sl(), sl(), sl(), sl(), sl()),
             child: VendorVerificationPage(args: args),
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.createPassword,
+      pageBuilder: (_, state) {
+        final args = CreatePasswordPageArgs(token: state.pathParameters['token']!);
+        return MaterialPage(
+          child: BlocProvider(
+            create: (_) => CreatePasswordManager(sl()),
+            child: CreatePasswordPage(args: args),
           ),
         );
       },

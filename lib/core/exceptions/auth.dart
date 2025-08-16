@@ -22,3 +22,7 @@ final class UserAlreadyExistsException extends AuthException {
   UserAlreadyExistsException()
     : super('The user with the given credentials already exists. Please check and try again');
 }
+
+final class InvalidPasswordException extends AuthException {
+  InvalidPasswordException() : super('The passwords do not match or are too short. Minimum 8 characters');
+}

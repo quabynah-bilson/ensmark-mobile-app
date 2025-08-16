@@ -1,7 +1,8 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
-part 'location.identity.freezed.dart';
+part 'location.identity.mapper.dart';
 
+@MappableEnum(mode: ValuesMode.indexed)
 enum IdentityType {
   nationalId('National ID'),
   passport('Passport'),
@@ -13,22 +14,37 @@ enum IdentityType {
   const IdentityType(this.label);
 }
 
-@freezed
-abstract class LocationIdentityState with _$LocationIdentityState {
-  const factory LocationIdentityState({
-    @Default('') String taxIdentificationNumber,
-    @Default('') String houseNumber,
-    @Default('') String street,
-    @Default('') String digitalCode,
-    @Default('') String landmark,
-    @Default('') String town,
-    @Default('') String region,
-    @Default(IdentityType.nationalId) IdentityType idType,
-    @Default('') String idNumber,
-    @Default('') String addressLine1,
-    @Default('') String addressLine2,
-    @Default('') String addressLine3,
-    @Default('') String addressLine4,
-    @Default('GH') String country,
-  }) = _LocationIdentityState;
+@MappableClass()
+class LocationIdentityState with LocationIdentityStateMappable {
+  const LocationIdentityState({
+    this.idType = IdentityType.nationalId,
+    this.idNumber = '',
+    this.addressLine1 = '',
+    this.addressLine2 = '',
+    this.addressLine3 = '',
+    this.addressLine4 = '',
+    this.country = 'GH',
+    this.taxIdentificationNumber = '',
+    this.houseNumber = '',
+    this.street = '',
+    this.digitalCode = '',
+    this.landmark = '',
+    this.town = '',
+    this.region = '',
+  });
+
+  final IdentityType idType;
+  final String idNumber;
+  final String addressLine1;
+  final String addressLine2;
+  final String addressLine3;
+  final String addressLine4;
+  final String country;
+  final String taxIdentificationNumber;
+  final String houseNumber;
+  final String street;
+  final String digitalCode;
+  final String landmark;
+  final String town;
+  final String region;
 }

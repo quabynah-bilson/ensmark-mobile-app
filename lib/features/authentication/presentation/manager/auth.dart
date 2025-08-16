@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:mobile/features/authentication/domain/entities/owner.type.dart';
 import 'package:mobile/features/authentication/domain/entities/user.dart';
 import 'package:mobile/features/authentication/domain/entities/user.role.dart';
@@ -12,15 +12,15 @@ import 'package:mobile/features/authentication/domain/usecases/logout.dart';
 import 'package:mobile/features/authentication/domain/usecases/request.account.dart';
 import 'package:mobile/features/shared/domain/entities/revenue.item.dart';
 
-part 'auth.freezed.dart';
+part 'auth.mapper.dart';
 
-@freezed
-abstract class UserAuthState with _$UserAuthState {
-  const factory UserAuthState({
-    @Default(false) bool authenticating,
-    @Default(null) String? errorMessage,
-    @Default(null) AppUser? user,
-  }) = _UserAuthState;
+@MappableClass()
+class UserAuthState with UserAuthStateMappable {
+  const UserAuthState({this.authenticating = false, this.errorMessage, this.user});
+
+  final bool authenticating;
+  final String? errorMessage;
+  final AppUser? user;
 }
 
 final class UserAuthManager extends Cubit<UserAuthState> {
@@ -79,10 +79,19 @@ final class UserAuthManager extends Cubit<UserAuthState> {
     emit(state.copyWith(authenticating: false));
   }
 
-  Future<void> checkAuthStatus() async {
+  Future<void> checkAuthStatus({bool passwordReset = false}) async {
     final authed = await authenticated;
     if (!authed) return;
 
+    if (passwordReset) {
+      final result = await _currentUserUseCase(null);
+      result.fold((l) => emit(state.copyWith(errorMessage: l)), (user) {
+        //!todo - check if user has a password
+        user = user..verified = true;
+        emit(state.copyWith(errorMessage: null, user: user));
+      });
+      return;
+    }
     final result = await _currentUserUseCase(null);
     result.fold(
       (l) => emit(state.copyWith(errorMessage: l)),

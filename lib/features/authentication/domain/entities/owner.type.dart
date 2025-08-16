@@ -1,7 +1,8 @@
-enum OwnerType {
-  individual('Individual'),
-  business('Business');
+enum OwnerType { individual, business }
 
-  final String label;
-  const OwnerType(this.label);
+extension OwnerTypeExtension on OwnerType {
+  String get label => switch (this) {
+    OwnerType.individual => 'Individual',
+    OwnerType.business => 'Business',
+  };
 }
