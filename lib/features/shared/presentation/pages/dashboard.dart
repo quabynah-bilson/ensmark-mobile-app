@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/features/authentication/domain/entities/user.dart';
-import 'package:mobile/features/authentication/domain/entities/user.role.dart';
 import 'package:mobile/features/authentication/presentation/manager/auth.dart';
-import 'package:shared_utils/shared_utils.dart';
+import 'package:mobile/features/shared/presentation/widgets/bottom.nav.dart';
+import 'package:shared_utils/shared_utils.dart' show ContextX;
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key, required this.shell});
@@ -44,35 +43,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
           bottomNavigationBar: Builder(
             builder: (_) {
               if (user?.role == null) return const SizedBox.shrink();
-              return BottomNavigationBar(
-                items: _buildNavigationItems(user!.role),
-                onTap: (index) => widget.shell.goBranch(index),
+              return CustomBottomNavBar(
                 currentIndex: widget.shell.currentIndex,
-                type: BottomNavigationBarType.fixed,
-                useLegacyColorScheme: false,
+                onTap: (index) => widget.shell.goBranch(index),
+                onPostTap: () {
+                  //!todo: Handle post/add property action
+                  // You can navigate to a property creation screen or show a modal
+                  context.showSnackBar('Add Property feature coming soon!');
+                },
               );
             },
           ),
         );
       },
     );
-  }
-
-  List<BottomNavigationBarItem> _buildNavigationItems(UserRole role) {
-    switch (role) {
-      case UserRole.owner:
-        return const [
-          BottomNavigationBarItem(icon: Icon(TablerIcons.home_2), label: 'Explore'),
-          BottomNavigationBarItem(icon: Icon(TablerIcons.credit_card), label: 'Payments'),
-          BottomNavigationBarItem(icon: Icon(TablerIcons.notification), label: 'Notifications'),
-          BottomNavigationBarItem(icon: Icon(TablerIcons.user_cog), label: 'Profile'),
-        ];
-      case UserRole.officer:
-        return const [
-          BottomNavigationBarItem(icon: Icon(TablerIcons.home_2), label: 'Assigned'),
-          BottomNavigationBarItem(icon: Icon(TablerIcons.notification), label: 'Notifications'),
-          BottomNavigationBarItem(icon: Icon(TablerIcons.user_cog), label: 'Profile'),
-        ];
-    }
   }
 }

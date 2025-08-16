@@ -42,6 +42,28 @@ import 'package:mobile/features/properties/data/repositories/property.dart'
     as _i436;
 import 'package:mobile/features/properties/domain/repositories/property.dart'
     as _i631;
+import 'package:mobile/features/properties/domain/usecases/all.properties.dart'
+    as _i67;
+import 'package:mobile/features/properties/domain/usecases/approve.property.dart'
+    as _i325;
+import 'package:mobile/features/properties/domain/usecases/approved.properties.dart'
+    as _i435;
+import 'package:mobile/features/properties/domain/usecases/assign.property.dart'
+    as _i717;
+import 'package:mobile/features/properties/domain/usecases/create.property.dart'
+    as _i1004;
+import 'package:mobile/features/properties/domain/usecases/delete.property.dart'
+    as _i1044;
+import 'package:mobile/features/properties/domain/usecases/get.property.dart'
+    as _i210;
+import 'package:mobile/features/properties/domain/usecases/pending.properties.dart'
+    as _i993;
+import 'package:mobile/features/properties/domain/usecases/reject.property.dart'
+    as _i813;
+import 'package:mobile/features/properties/domain/usecases/unassign.property.dart'
+    as _i257;
+import 'package:mobile/features/properties/domain/usecases/update.property.dart'
+    as _i411;
 import 'package:mobile/features/shared/data/datasources/local/revenue.item.dart'
     as _i3;
 import 'package:mobile/features/shared/data/repositories/revenue.item.dart'
@@ -132,6 +154,28 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i1032.SyncRepository>(),
           gh<_i1055.SyncServiceClient>(),
         ));
+    gh.lazySingleton<_i67.GetAllProperties>(
+        () => _i67.GetAllProperties(gh<_i631.PropertyRepository>()));
+    gh.lazySingleton<_i1004.CreateProperty>(
+        () => _i1004.CreateProperty(gh<_i631.PropertyRepository>()));
+    gh.lazySingleton<_i993.GetPendingProperties>(
+        () => _i993.GetPendingProperties(gh<_i631.PropertyRepository>()));
+    gh.lazySingleton<_i435.GetApprovedProperties>(
+        () => _i435.GetApprovedProperties(gh<_i631.PropertyRepository>()));
+    gh.lazySingleton<_i210.GetProperty>(
+        () => _i210.GetProperty(gh<_i631.PropertyRepository>()));
+    gh.lazySingleton<_i717.AssignProperty>(
+        () => _i717.AssignProperty(gh<_i631.PropertyRepository>()));
+    gh.lazySingleton<_i257.UnassignProperty>(
+        () => _i257.UnassignProperty(gh<_i631.PropertyRepository>()));
+    gh.lazySingleton<_i325.ApproveProperty>(
+        () => _i325.ApproveProperty(gh<_i631.PropertyRepository>()));
+    gh.lazySingleton<_i813.RejectProperty>(
+        () => _i813.RejectProperty(gh<_i631.PropertyRepository>()));
+    gh.lazySingleton<_i411.UpdateProperty>(
+        () => _i411.UpdateProperty(gh<_i631.PropertyRepository>()));
+    gh.lazySingleton<_i1044.DeleteProperty>(
+        () => _i1044.DeleteProperty(gh<_i631.PropertyRepository>()));
     gh.lazySingleton<_i290.GetRevenueItemsUseCase>(
         () => _i290.GetRevenueItemsUseCase(gh<_i552.RevenueItemRepository>()));
     gh.lazySingleton<_i601.CreatePasswordUseCase>(

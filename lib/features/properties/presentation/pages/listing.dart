@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:shared_utils/shared_utils.dart' show ContextX;
+import 'package:mobile/features/shared/presentation/widgets/text.field.dart';
+import 'package:shared_utils/shared_utils.dart' show ContextX, TextX;
+import 'package:styled_widget/styled_widget.dart';
 
 class PropertiesListingScreen extends StatefulWidget {
   const PropertiesListingScreen({super.key});
@@ -14,8 +16,8 @@ class _PropertiesListingScreenState extends State<PropertiesListingScreen> {
 
   // Mock data for locations
   final List<LocationCard> _locations = [
-    LocationCard(name: 'Accra', propertyCount: 830, icon: '🏛️', color: const Color(0xFF3B82F6)),
-    LocationCard(name: 'Kumasi', propertyCount: 1270, icon: '🏢', color: const Color(0xFF10B981)),
+    LocationCard(name: 'Accra', propertyCount: 830, icon: '🏛️', selected: true),
+    LocationCard(name: 'Kumasi', propertyCount: 1270, icon: '🏢', selected: false),
   ];
 
   // Mock property listings with detailed information
@@ -27,7 +29,7 @@ class _PropertiesListingScreenState extends State<PropertiesListingScreen> {
       priceType: 'mo',
       agentName: 'Amanda',
       timePosted: '2h ago',
-      agentImageUrl: 'https://images.unsplash.com/photo-1494790108755-2616b0ab9c99?w=100',
+      agentImageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
       bedrooms: 2,
       bathrooms: 2,
       squareFeet: 335,
@@ -50,96 +52,69 @@ class _PropertiesListingScreenState extends State<PropertiesListingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header with title and profile
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Explore',
-                      style: context.textTheme.headlineLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header with title and profile
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Explore',
+                    style: context.textTheme.headlineLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: context.colorScheme.onSurface,
                     ),
-                    CircleAvatar(
-                      radius: 24,
-                      backgroundImage: NetworkImage(
-                        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Search bar
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(12)),
-                  child: Row(
-                    children: [
-                      Icon(TablerIcons.search, color: Colors.grey[500], size: 20),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: InputDecoration(
-                            hintText: 'Search for properties or regions',
-                            hintStyle: TextStyle(color: Colors.grey[500]),
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
-                ),
+                  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100'.avatar(size: 40, circular: true),
+                ],
               ),
+            ),
 
-              const SizedBox(height: 24),
+            // Search bar
+            AppTextField(
+              labelText: 'Search for revenue portfolios',
+              controller: _searchController,
+              prefixIcon: TablerIcons.search,
+              required: false,
+            ).padding(horizontal: 20, bottom: 24),
 
-              // Location cards
-              SizedBox(
-                height: 120,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  itemCount: _locations.length,
-                  itemBuilder: (context, index) {
-                    final location = _locations[index];
-                    return _LocationCardWidget(location: location, isFirst: index == 0);
-                  },
-                ),
+            // Location cards
+            SizedBox(
+              height: context.height * 0.15,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                itemCount: _locations.length,
+                itemBuilder: (context, index) {
+                  final location = _locations[index];
+                  return _LocationCardWidget(location: location, isFirst: index == 0, selected: index == 0);
+                },
               ),
+            ),
 
-              const SizedBox(height: 32),
+            const SizedBox(height: 32),
 
-              // Property listings
-              SizedBox(
-                height: context.height * 0.45,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  itemCount: _propertyListings.length,
-                  itemBuilder: (context, index) {
-                    final property = _propertyListings[index];
-                    return _PropertyListingCard(property: property);
-                  },
-                ),
+            // Property listings
+            SizedBox(
+              height: context.height * 0.45,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                itemCount: _propertyListings.length,
+                itemBuilder: (context, index) {
+                  final property = _propertyListings[index];
+                  return _PropertyListingCard(property: property);
+                },
               ),
+            ),
 
-              const SizedBox(height: 20),
-            ],
-          ),
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );
@@ -151,9 +126,9 @@ class LocationCard {
   final String name;
   final int propertyCount;
   final String icon;
-  final Color color;
+  final bool selected;
 
-  LocationCard({required this.name, required this.propertyCount, required this.icon, required this.color});
+  LocationCard({required this.name, required this.propertyCount, required this.icon, required this.selected});
 }
 
 class PropertyListing {
@@ -188,11 +163,14 @@ class PropertyListing {
 class _LocationCardWidget extends StatelessWidget {
   final LocationCard location;
   final bool isFirst;
+  final bool selected;
 
-  const _LocationCardWidget({required this.location, required this.isFirst});
+  const _LocationCardWidget({required this.location, required this.isFirst, required this.selected});
 
   @override
   Widget build(BuildContext context) {
+    final isSelected = selected || location.selected;
+
     return Container(
       width: 160,
       margin: EdgeInsets.only(right: 16, left: isFirst ? 0 : 0),
@@ -200,30 +178,54 @@ class _LocationCardWidget extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [location.color, location.color.withValues(alpha: 0.8)],
+          colors: isSelected
+              ? [context.colorScheme.primary, context.colorScheme.secondary]
+              : [context.colorScheme.surfaceContainerHigh, context.colorScheme.surfaceContainer],
         ),
         borderRadius: BorderRadius.circular(16),
+        border: isSelected
+            ? Border.all(color: context.colorScheme.primary.withValues(alpha: 0.3), width: 1.5)
+            : Border.all(color: context.colorScheme.outline.withValues(alpha: 0.2), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: (isSelected ? context.colorScheme.primary : context.colorScheme.shadow).withValues(alpha: 0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Stack(
         children: [
-          if (isFirst)
+          if (isSelected)
             Positioned(
               top: 8,
               right: 8,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
+                  color: context.colorScheme.surface.withValues(alpha: 0.9),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+                  border: Border.all(color: context.colorScheme.outline.withValues(alpha: 0.2)),
                 ),
                 child: Text(
                   'Selected',
-                  style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: context.colorScheme.primary, fontSize: 10, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
-          Positioned(top: 16, left: 16, child: Text(location.icon, style: const TextStyle(fontSize: 32))),
+          Positioned(
+            top: 16,
+            left: 16,
+            child: Text(
+              location.icon,
+              style: TextStyle(
+                fontSize: 32,
+                shadows: isSelected
+                    ? [Shadow(color: context.colorScheme.onPrimary.withValues(alpha: 0.3), blurRadius: 2)]
+                    : [],
+              ),
+            ),
+          ),
           Positioned(
             bottom: 16,
             left: 16,
@@ -233,11 +235,24 @@ class _LocationCardWidget extends StatelessWidget {
               children: [
                 Text(
                   location.name,
-                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    color: isSelected ? context.colorScheme.onPrimary : context.colorScheme.onSurface,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    shadows: isSelected
+                        ? [Shadow(color: context.colorScheme.shadow.withValues(alpha: 0.3), blurRadius: 2)]
+                        : [],
+                  ),
                 ),
                 Text(
                   '${location.propertyCount} properties',
-                  style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 12),
+                  style: TextStyle(
+                    color: isSelected
+                        ? context.colorScheme.onPrimary.withValues(alpha: 0.8)
+                        : context.colorScheme.onSurfaceVariant,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
@@ -310,10 +325,13 @@ class _PropertyListingCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     property.agentName,
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: context.colorScheme.onSurface),
                   ),
                 ),
-                Text(property.timePosted, style: TextStyle(color: Colors.grey[500], fontSize: 12)),
+                Text(
+                  property.timePosted,
+                  style: TextStyle(color: context.colorScheme.surfaceContainerHighest, fontSize: 12),
+                ),
               ],
             ),
           ),
@@ -335,10 +353,14 @@ class _PropertyListingCard extends StatelessWidget {
                       clipper: _PriceTagClipper(),
                       child: Container(
                         padding: const EdgeInsets.fromLTRB(16, 8, 20, 8),
-                        color: Colors.black.withValues(alpha: 0.85),
+                        color: context.colorScheme.onSurface.withValues(alpha: 0.85),
                         child: Text(
                           '\$${property.price.toStringAsFixed(0)}/${property.priceType}',
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 14),
+                          style: TextStyle(
+                            color: context.colorScheme.surface,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                     ),
@@ -394,7 +416,7 @@ class _PropertyListingCard extends StatelessWidget {
                 const SizedBox(width: 16),
                 _PropertyFeature(icon: TablerIcons.ruler_measure, text: '${property.squareFeet}'),
                 const Spacer(),
-                Icon(TablerIcons.bookmark, color: Colors.grey[400], size: 16),
+                Icon(TablerIcons.bookmark, color: context.colorScheme.surfaceContainerHighest, size: 16),
               ],
             ),
           ),
@@ -416,9 +438,9 @@ class _PropertyFeature extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 14, color: Colors.grey[600]),
+        Icon(icon, size: 14, color: context.colorScheme.surfaceContainerHighest),
         const SizedBox(width: 3),
-        Text(text, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+        Text(text, style: TextStyle(color: context.colorScheme.surfaceContainerHighest, fontSize: 12)),
       ],
     );
   }

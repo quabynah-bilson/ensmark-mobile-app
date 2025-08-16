@@ -16,9 +16,9 @@ final class _AppColors {
   const _AppColors._();
 
   // Light Theme Colors
-  static const Color lightPrimary = Color(0xFF007BFF); // A professional deep blue.
-  static const Color lightAccent = Color(0xFF00CFFF); // A light, contrasting blue.
-  static const Color lightBackground = Color(0xFFF0F2F5); // A soft gray for backgrounds.
+  static const Color lightPrimary = Color(0xFF8B5CF6); // Purple gradient primary color
+  static const Color lightAccent = Color(0xFFA855F7); // Purple gradient secondary color
+  static const Color lightBackground = Color(0xFFF0F2F5); // A very light gray for backgrounds.
   static const Color lightSurface = Color(0xFFFFFFFF); // White for cards and surfaces.
   static const Color lightTextPrimary = Color(0xFF212529); // Dark gray for primary text.
   static const Color lightTextSecondary = Color(0xFF6C757D); // Lighter gray for secondary text.
@@ -27,8 +27,8 @@ final class _AppColors {
   // static const Color lightSuccess = Color(0xFF28A745); // Green for success states.
 
   // Dark Theme Colors
-  static const Color darkPrimary = Color(0xFF0D6EFD); // A slightly lighter blue for dark mode.
-  static const Color darkAccent = Color(0xFF00CFFF); // Same accent for consistency.
+  static const Color darkPrimary = Color(0xFFFFC107); // Amber/yellow primary color
+  static const Color darkAccent = Color(0xFFFFB300); // Amber/yellow secondary color
   static const Color darkBackground = Color(0xFF121212); // A very dark gray.
   static const Color darkSurface = Color(0xFF1E1E1E); // A slightly lighter gray for surfaces.
   static const Color darkTextPrimary = Color(0xFFE0E0E0); // Light gray for primary text.
@@ -52,12 +52,13 @@ final class AppTheme {
 
   // --- Light Theme ---
   static ThemeData lightTheme() {
-    const colorScheme = ColorScheme.light(
+    final colorScheme = ColorScheme.light(
       primary: _AppColors.lightPrimary,
       secondary: _AppColors.lightAccent,
       surface: _AppColors.lightSurface,
       surfaceContainer: _AppColors.lightBackground,
       error: _AppColors.lightError,
+      surfaceContainerHighest: Colors.grey[500],
     );
     return ThemeData.light(useMaterial3: true).copyWith(
       // --- Color Scheme ---
@@ -136,12 +137,13 @@ final class AppTheme {
 
   // --- Dark Theme ---
   static ThemeData darkTheme() {
-    const colorScheme = ColorScheme.dark(
+    final colorScheme = ColorScheme.dark(
       primary: _AppColors.darkPrimary,
       secondary: _AppColors.darkAccent,
       surface: _AppColors.darkSurface,
       surfaceContainer: _AppColors.darkBackground,
       error: _AppColors.darkError,
+      surfaceContainerHighest: Colors.grey[500],
     );
     return ThemeData.dark(useMaterial3: true).copyWith(
       // --- Color Scheme ---
