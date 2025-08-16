@@ -1,3 +1,4 @@
+import 'package:faker/faker.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
@@ -11,6 +12,10 @@ final class AuthUserLocalDataSource {
   final FlutterSecureStorage _storage;
 
   const AuthUserLocalDataSource(this._storage, this._db);
+
+  Future<void> init() async {
+    _seedDatabase();
+  }
 
   Future<AppUser?> createUser({
     required UserRole role,
@@ -59,5 +64,37 @@ final class AuthUserLocalDataSource {
   Future<AppUser?> getUserByGuid({required String guid}) async {
     var appUser = await _db.appUsers.where().guidEqualTo(guid).build().findFirstAsync();
     return appUser;
+  }
+
+  void _seedDatabase() {
+    if (_db.appUsers.count() > 1) return;
+    final faker = Faker();
+    final List<AppUser> users = [
+      for (var i = 0; i < 10; i++)
+        AppUser()
+          ..username = faker.internet.email()
+          ..password = faker.internet.password()
+          ..role = UserRole.owner
+          ..firstName = faker.person.firstName()
+          ..lastName = faker.person.lastName()
+          ..phoneNumber = faker.phoneNumber.us()
+          ..dateOfBirth = DateTime.now()
+          ..verified = true,
+    ];
+
+    final List<AppUser> officers = [
+      for (var i = 0; i < 10; i++)
+        AppUser()
+          ..username = faker.internet.email()
+          ..password = faker.internet.password()
+          ..role = UserRole.officer
+          ..firstName = faker.person.firstName()
+          ..lastName = faker.person.lastName()
+          ..phoneNumber = faker.phoneNumber.us()
+          ..dateOfBirth = DateTime.now()
+          ..verified = true,
+    ];
+    _db.write((db) => db.appUsers.putAll(users));
+    _db.write((db) => db.appUsers.putAll(officers));
   }
 }

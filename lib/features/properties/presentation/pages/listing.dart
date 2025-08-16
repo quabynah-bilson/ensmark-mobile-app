@@ -124,14 +124,17 @@ class _PropertiesListingScreenState extends State<PropertiesListingScreen> {
               const SizedBox(height: 32),
 
               // Property listings
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _propertyListings.length,
-                itemBuilder: (context, index) {
-                  final property = _propertyListings[index];
-                  return _PropertyListingCard(property: property);
-                },
+              SizedBox(
+                height: context.height * 0.45,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  itemCount: _propertyListings.length,
+                  itemBuilder: (context, index) {
+                    final property = _propertyListings[index];
+                    return _PropertyListingCard(property: property);
+                  },
+                ),
               ),
 
               const SizedBox(height: 20),
@@ -245,6 +248,44 @@ class _LocationCardWidget extends StatelessWidget {
   }
 }
 
+// Custom price tag shape painter
+class _PriceTagClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    const radius = 12.0;
+    const arrowWidth = 8.0;
+
+    // Start from top-left
+    path.moveTo(radius, 0);
+
+    // Top edge to right (leaving space for arrow)
+    path.lineTo(size.width - arrowWidth, 0);
+
+    // Create arrow point
+    path.lineTo(size.width, size.height / 2);
+    path.lineTo(size.width - arrowWidth, size.height);
+
+    // Bottom edge to left
+    path.lineTo(radius, size.height);
+
+    // Bottom-left rounded corner
+    path.arcToPoint(Offset(0, size.height - radius), radius: const Radius.circular(radius));
+
+    // Left edge
+    path.lineTo(0, radius);
+
+    // Top-left rounded corner
+    path.arcToPoint(const Offset(radius, 0), radius: const Radius.circular(radius));
+
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 // Property listing card widget
 class _PropertyListingCard extends StatelessWidget {
   final PropertyListing property;
@@ -254,7 +295,8 @@ class _PropertyListingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 24, left: 20, right: 20),
+      width: 280,
+      margin: const EdgeInsets.only(right: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -263,95 +305,96 @@ class _PropertyListingCard extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 12),
             child: Row(
               children: [
-                CircleAvatar(radius: 20, backgroundImage: NetworkImage(property.agentImageUrl)),
-                const SizedBox(width: 12),
+                CircleAvatar(radius: 16, backgroundImage: NetworkImage(property.agentImageUrl)),
+                const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     property.agentName,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
                   ),
                 ),
-                Text(property.timePosted, style: TextStyle(color: Colors.grey[500], fontSize: 14)),
+                Text(property.timePosted, style: TextStyle(color: Colors.grey[500], fontSize: 12)),
               ],
             ),
           ),
 
           // Property image and price
-          Container(
-            height: 300,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(image: NetworkImage(property.imageUrl), fit: BoxFit.cover),
-            ),
-            child: Stack(
-              children: [
-                // Price tag
-                Positioned(
-                  top: 16,
-                  left: 16,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.8),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      '\$${property.price.toStringAsFixed(0)}/${property.priceType}',
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
-                    ),
-                  ),
-                ),
-
-                // Bookmark icon
-                Positioned(
-                  top: 16,
-                  right: 16,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.9),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(TablerIcons.bookmark, color: Colors.black, size: 20),
-                  ),
-                ),
-
-                // Image pagination dots
-                Positioned(
-                  bottom: 16,
-                  left: 0,
-                  right: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(5, (index) {
-                      return Container(
-                        width: 6,
-                        height: 6,
-                        margin: const EdgeInsets.symmetric(horizontal: 2),
-                        decoration: BoxDecoration(
-                          color: index == 0 ? Colors.white : Colors.white.withValues(alpha: 0.4),
-                          shape: BoxShape.circle,
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                image: DecorationImage(image: NetworkImage(property.imageUrl), fit: BoxFit.cover),
+              ),
+              child: Stack(
+                children: [
+                  // Custom price tag
+                  Positioned(
+                    top: 16,
+                    left: 16,
+                    child: ClipPath(
+                      clipper: _PriceTagClipper(),
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 20, 8),
+                        color: Colors.black.withValues(alpha: 0.85),
+                        child: Text(
+                          '\$${property.price.toStringAsFixed(0)}/${property.priceType}',
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 14),
                         ),
-                      );
-                    }),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+
+                  // Bookmark icon
+                  Positioned(
+                    top: 16,
+                    right: 16,
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.9),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(TablerIcons.bookmark, color: Colors.black, size: 16),
+                    ),
+                  ),
+
+                  // Image pagination dots
+                  Positioned(
+                    bottom: 12,
+                    left: 0,
+                    right: 0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(5, (index) {
+                        return Container(
+                          width: 5,
+                          height: 5,
+                          margin: const EdgeInsets.symmetric(horizontal: 1.5),
+                          decoration: BoxDecoration(
+                            color: index == 0 ? Colors.white : Colors.white.withValues(alpha: 0.4),
+                            shape: BoxShape.circle,
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
 
           // Property details
           Padding(
-            padding: const EdgeInsets.only(top: 16),
+            padding: const EdgeInsets.only(top: 12),
             child: Row(
               children: [
-                _PropertyFeature(icon: TablerIcons.bed, text: '${property.bedrooms} bedrooms'),
-                const SizedBox(width: 24),
-                _PropertyFeature(icon: TablerIcons.bath, text: '${property.bathrooms} baths'),
-                const SizedBox(width: 24),
-                _PropertyFeature(icon: TablerIcons.ruler_measure, text: '${property.squareFeet} sqft'),
+                _PropertyFeature(icon: TablerIcons.bed, text: '${property.bedrooms} bed'),
+                const SizedBox(width: 16),
+                _PropertyFeature(icon: TablerIcons.bath, text: '${property.bathrooms} bath'),
+                const SizedBox(width: 16),
+                _PropertyFeature(icon: TablerIcons.ruler_measure, text: '${property.squareFeet}'),
                 const Spacer(),
-                Icon(TablerIcons.bookmark, color: Colors.grey[400], size: 20),
+                Icon(TablerIcons.bookmark, color: Colors.grey[400], size: 16),
               ],
             ),
           ),
@@ -371,10 +414,11 @@ class _PropertyFeature extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 16, color: Colors.grey[600]),
-        const SizedBox(width: 4),
-        Text(text, style: TextStyle(color: Colors.grey[600], fontSize: 14)),
+        Icon(icon, size: 14, color: Colors.grey[600]),
+        const SizedBox(width: 3),
+        Text(text, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
       ],
     );
   }

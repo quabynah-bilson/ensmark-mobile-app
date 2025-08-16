@@ -38,6 +38,10 @@ import 'package:mobile/features/authentication/domain/usecases/request.account.d
     as _i622;
 import 'package:mobile/features/properties/data/datasources/property.local.dart'
     as _i924;
+import 'package:mobile/features/properties/data/repositories/property.dart'
+    as _i436;
+import 'package:mobile/features/properties/domain/repositories/property.dart'
+    as _i631;
 import 'package:mobile/features/shared/data/datasources/local/revenue.item.dart'
     as _i3;
 import 'package:mobile/features/shared/data/repositories/revenue.item.dart'
@@ -122,6 +126,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i111.SyncRepositoryImpl(gh<_i338.Isar>()));
     gh.singleton<_i552.RevenueItemRepository>(() =>
         _i507.RevenueItemRepositoryImpl(gh<_i3.RevenueItemLocalDataSource>()));
+    gh.lazySingleton<_i631.PropertyRepository>(() =>
+        _i436.PropertyRepositoryImpl(gh<_i924.PropertyLocalDataSource>()));
     gh.lazySingleton<_i762.SyncService>(() => _i762.SyncService(
           gh<_i1032.SyncRepository>(),
           gh<_i1055.SyncServiceClient>(),

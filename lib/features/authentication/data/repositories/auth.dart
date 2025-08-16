@@ -16,7 +16,9 @@ final class AuthRepositoryImpl extends AuthRepository {
   final FlutterSecureStorage _storage;
   final AuthUserLocalDataSource _ds;
 
-  const AuthRepositoryImpl(this._storage, this._ds);
+  AuthRepositoryImpl(this._storage, this._ds) {
+    _ds.init();
+  }
 
   @override
   Future<bool> get authenticated async {

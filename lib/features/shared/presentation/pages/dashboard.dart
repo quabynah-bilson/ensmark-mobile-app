@@ -33,14 +33,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       builder: (_, AppUser? user) {
         return Scaffold(
           body: widget.shell,
-          floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
-          floatingActionButton: FloatingActionButton.extended(
-            icon: Icon(TablerIcons.home_link),
-            label: Text('Add Property'),
-            onPressed: () {
-              //todo: assign/add new property
-            },
-          ),
+          // floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
+          // floatingActionButton: FloatingActionButton.extended(
+          //   icon: Icon(TablerIcons.home_link),
+          //   label: Text('Add Property'),
+          //   onPressed: () {
+          //     //todo: assign/add new property
+          //   },
+          // ),
           bottomNavigationBar: Builder(
             builder: (_) {
               if (user?.role == null) return const SizedBox.shrink();
